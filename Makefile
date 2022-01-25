@@ -45,7 +45,7 @@ else
         STD := -std=gnu11
 
         # Binary File
-        OBJ := star
+        OBJ := MaPWaR
 
         # Library Flags
         LIBRARY := -Wl,-rpath,@executable_path/$(SDL_DEVELOPMENT_DIR) -F$(SDL_DEVELOPMENT_DIR) -framework SDL2
@@ -66,7 +66,7 @@ else
         STD := -std=c11
 
         # Binary File
-        OBJ := star
+        OBJ := MaPWaR
 
         # Library and C Compiler Flags
         LIBRARY := $(shell sdl2-config --libs)
@@ -74,10 +74,7 @@ else
 
         # Download Message
         DOWNLOAD := `sudo apt-get install libsdl2-dev`
-
-        # Distribution
-        DIST_NAME := SDL2-game-linux
-        DIST_DEPENDENCIES := $(OBJ)
+	
     endif
 endif
 
@@ -88,22 +85,6 @@ DEBUG := -g0
 SRC_DIR := src/
 SOURCE_FILES := $(wildcard $(SRC_DIR)*.c)
 
-# Source Objects
-OBJ_DIR := bin/
-OBJECT_FILES := $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SOURCE_FILES))
-
-# Header Files
-HEADER_DIR := include/
-
-# Depend Files
-DEPEND_DIR := depend/
-DEPEND_FILES := $(patsubst $(SRC_DIR)%.c,$(DEPEND_DIR)%.d,$(SOURCE_FILES))
-
-# Distribution related Directories
-ASSETS_DIR := assets/
-DIST_DIR := dist/
-LOGS_DIR := logs/
-
 # Compiler
 CC := gcc
 
@@ -112,12 +93,6 @@ CFLAGS += -Wall -Werror -pedantic -Wshadow -Wstrict-aliasing -Wstrict-overflow $
 
 # Optimizations
 OPT := -O2 -flto
-
-# Include directories
-INCLUDE :=  -I$(SDL_DEVELOPMENT_INC) -I$(HEADER_DIR)
-
-# Dependency Flags
-DFLAGS := -MMD -MF
 
 .PHONY: all SDL
 
@@ -136,26 +111,10 @@ ifeq ($(wildcard $(SDL_DEVELOPMENT_INC)),)
 	$(error SDL2 development package [$(SDL_DEVELOPMENT_INC)] not found, try $(DOWNLOAD))
 endif
 
--include $(DEPEND_FILES)
-
-# Compile the distribution for the given system
-.PHONY: dist
-
-dist: $(DIST_DIR) $(DIST_DEPENDENCIES) $(ASSETS_DIR)
-	@echo Compiling distribution build in \"$(DIST_DIR)\" as \"$(DIST_NAME).tar.gz\"
-	mkdir $(DIST_DIR)$(DIST_NAME)
-	mkdir $(DIST_DIR)$(DIST_NAME)/$(LOGS_DIR)
-	cp $(OBJ) $(DIST_DIR)$(DIST_NAME)
-	cp -r $(ASSETS_DIR) $(DIST_DIR)$(DIST_NAME)/
-	cp -r $(DIST_DEPENDENCIES) $(DIST_DIR)$(DIST_NAME)/
-	cp README* $(DIST_DIR)$(DIST_NAME)
-	tar -zcvf $(DIST_DIR)$(DIST_NAME).tar.gz -C $(DIST_DIR) --remove-files $(DIST_NAME)
-
 .PHONY: valgrind drmemory clean
 
 clean:
 	rm -f $(OBJ_DIR)*
-	rm -f $(DEPEND_DIR)*
 	rm -f $(OBJ)
 
 valgrind: all
