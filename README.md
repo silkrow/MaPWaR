@@ -38,6 +38,64 @@ Satisfying any of the following requirement will be considered winning:
 
 ## Basic RULES
 
+### Player
+
+Each round, the player will choose the new type of soldier and amount he/she wants for the 
+
+next backup, and he/she should read the information received from communicators, and send 
+
+commands to them. 
+
+### Moving
+
+Each type of soldier has its own speed influenced by the landform, they'll follow the 
+
+instruction and move to the destination automatically, unless encountering enemies, which 
+
+will cause them to stop and fight. 
+
+After some rounds(Depend on the specific kind of soldier/unit the commander ordered), 
+
+backup forces will join the map from somewhere near the birth place of the *commander base*.
+
+### Fire!
+
+All fights will be automatically done, but the calculated infomation of fire power last round 
+
+will be feeded back to commander each round for future decisions(As well as the member 
+
+situation). Generally, a group of troop will have a life line indicating its scale, whenever
+
+the number is lower than some threshold, it will be considered as **unit loss** and the self 
+
+recovering life line will never recover to high then this threshold again.
+
+### Communication
+
+At the beginning, the player has 6 communication devices, afterwards, communication devices
+
+will be supplied as backups. The soldier that holds the communication device will provide a 
+
+visible area(and can send command to).
+
 ## Types of soldier and their property
 
+### commander base
+
+### scout
+
 ## Types of landform
+
+### hill
+
+### mountain
+
+### river
+
+### forest
+
+### plain
+
+
+
+
