@@ -5,35 +5,23 @@
  *
  */
 
-
-
-
-
-
-typedef struct landform
+//////////
+//typedefs
+//////////
+typedef enum
 {
-    objectType type;
-    SDL_Texture * image;
-    SDL_Rect clip;
-    uint16_t subImage;
-    uint16_t subImageNumber;
-    int x;
-    int y;
-    int16_t lives;
-    float scale;
-    struct object * next;
-} Landform;
+	HUMAN,
+	AI
+} playerType;
 
-typedef struct troop
+typedef enum
 {
-    objectType type;
-    SDL_Texture * image;
-    SDL_Rect clip;
-    uint16_t subImage;
-    uint16_t subImageNumber;
-    int x;
-    int y;
-    int16_t lives;
-    float scale;
-    struct object * next;
-} Troop;
+	RED,
+	BLUE
+} teamType;
+
+///////////
+//functions
+///////////
+
+void run_game(void);

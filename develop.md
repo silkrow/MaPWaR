@@ -8,6 +8,7 @@
 
 # Structure 
 
+
 ## con.h 
 
 All the constants.
@@ -31,6 +32,8 @@ Handle the display.
 ## troop.c
 
 The property of the units.
+
+Note that these properties should be stored in the header file. 
 
 ## map.c
 
