@@ -1,31 +1,19 @@
 #include <stdio.h>
 #include <SDL2/SDL.h>
 
-
 #include "con.h"
 #include "main.h"
+#include "types.h"
 
-
-int game_is_running = FALSE;
-SDL_Window* window = NULL;
-SDL_Renderer* renderer = NULL;
-int last_frame_time = 0;
+globalSDL* global = NULL;
 
 void process_input(void);
 void update(void);
 void render(void);
 
-struct ball{
-	float x;
-	float y;
-	float width;
-	float height;
-} ball;
-
 int main(void){
-	game_is_running = initialize_window();
+	if(!setup()) return 0; // Setting up the global variable.
 
-	setup();
 	while(game_is_running){
 		process_input();
 		update();
@@ -37,31 +25,41 @@ int main(void){
 	return 0;
 }
 
-int initialize_window(void){
+////////////////////////////////////////////
+int setup(void){
 	if (SDL_Init(SDL_INIT_EVERYTHING)){
-		fprintf(stderr, "Error initializing SDL.\n");
+		fprintf(stderr, "Error initializing SDL>\n");
 		return FALSE;
-	}
+	}	
+	global->fps = FPS;
+	global->spf = FRAME_TARGET_TIME;
+	global->width = WIDTH;
+	global->height = HEIGHT;
+	global->basePath = RESOUCE_PATH;
+	global->window = NULL;
+	global->renderer = NULL;
+	global->running = 1;
+	global->state = GAME_PREPARE; 
+	global->last_frame_time = 0;
 
-	window = SDL_CreateWindow(
-			"Hello World", 
+	global->window = SDL_CreateWindow(
+			"MaPWaR", 
 			SDL_WINDOWPOS_CENTERED,
 			SDL_WINDOWPOS_CENTERED,
-			WINDOW_WIDTH,
-			WINDOW_HEIGHT,
-			SDL_WINDOW_BORDERLESS
+			global->width,
+			global->height,
+			SDL_WINDOW_OPENGL
 			);
-	if (!window){
+	if (!global->window){
 		fprintf(stderr, "Error initializing SDL window.\n");
 		return FALSE;
 	}
-	
-	renderer = SDL_CreateRenderer(
-			window,
+	global->renderer = SDL_CreateRenderer(
+			global->window,
 			-1, // Default.
 			0 // No flags or anything special.
 			);
-	if (!renderer){
+	if (!global->renderer){
 		fprintf(stderr, "Error initializing SDL renderer.\n");
 		return FALSE;
 	}
@@ -120,11 +118,4 @@ void destroy_window(void){
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
-}
-
-void setup(void){
-	ball.x = 400;
-	ball.y = 300;
-	ball.width = 15;
-	ball.height = 15;
 }

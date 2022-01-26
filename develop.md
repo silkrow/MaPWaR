@@ -38,4 +38,6 @@ Note that these properties should be stored in the header file.
 
 The property of the landforms.
 
+## command.c
 
+Provide an API function to handle the decisions made by both human and AI during the battle. 

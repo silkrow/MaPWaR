@@ -4,4 +4,4 @@
  * Listing all global variables. 
  */
 
-extern 
+extern globalSDL* global; 
