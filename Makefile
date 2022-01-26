@@ -9,7 +9,7 @@
 #
 
 build:
-	gcc -Wall -std=c99 ./src/*.c -lSDL2 -o MaPWaR
+	gcc -Wall -std=c99 ./src/*.c -lSDL2 -o MaPWaR -I ./include
 
 run:
 	./MaPWaR
