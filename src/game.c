@@ -2,18 +2,7 @@
 #include "game.h"
 #include "map.h"
 #include "troop.h"
-
-//////////
-//typedefs
-//////////
-
-typedef struct playerinfo
-{
-	playerType playertype; // Specify whether human or not.
-	teamType teamtype;
-	
-
-} Player;
+#include "extern.h"
 
 ///////////
 //variables

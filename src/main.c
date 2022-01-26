@@ -5,7 +5,7 @@
 #include "main.h"
 #include "types.h"
 
-globalSDL* global = NULL;
+GlobalSDL* global = NULL;
 
 void process_input(void);
 void update(void);
@@ -33,9 +33,8 @@ int setup(void){
 	}	
 	global->fps = FPS;
 	global->spf = FRAME_TARGET_TIME;
-	global->width = WIDTH;
-	global->height = HEIGHT;
-	global->basePath = RESOUCE_PATH;
+	global->window_width = WINDOW_WIDTH;
+	global->window_height = WINDOW_HEIGHT;
 	global->window = NULL;
 	global->renderer = NULL;
 	global->running = 1;
@@ -46,8 +45,8 @@ int setup(void){
 			"MaPWaR", 
 			SDL_WINDOWPOS_CENTERED,
 			SDL_WINDOWPOS_CENTERED,
-			global->width,
-			global->height,
+			global->window_width,
+			global->window_height,
 			SDL_WINDOW_OPENGL
 			);
 	if (!global->window){

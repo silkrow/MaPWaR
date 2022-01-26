@@ -4,4 +4,6 @@
  * Listing all global variables. 
  */
 
-extern globalSDL* global; 
+#include "types.h"
+
+extern GlobalSDL* global; 
