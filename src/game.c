@@ -1,18 +1,19 @@
 #include <stdio.h>
 #include <SDL2/SDL.h>
-#include "./con.h"
+
+
+#include "con.h"
+#include "main.h"
+
 
 int game_is_running = FALSE;
 SDL_Window* window = NULL;
 SDL_Renderer* renderer = NULL;
 int last_frame_time = 0;
 
-int initialize_window(void);
 void process_input(void);
 void update(void);
 void render(void);
-void destroy_window(void);
-void setup(void);
 
 struct ball{
 	float x;
