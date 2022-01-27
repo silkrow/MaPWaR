@@ -67,4 +67,7 @@ typedef struct playerInfo
 
 } Player;
 
-
+typedef struct {
+    SDL_Rect rect;    // dimensions of button
+    int pressed;
+} Button;

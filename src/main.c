@@ -7,8 +7,7 @@
 #include "display.h"
 
 GlobalSDL* global = NULL;
-
-void process_input(void);
+Button wel_bt_0;
 
 int main(void){
 	global = malloc(sizeof(GlobalSDL));
@@ -16,16 +15,16 @@ int main(void){
 	if(!setup()) return 0; // Setting up the global variable.
 
 
+	display_prepare();
 	while(global->running){
 
-	display_prepare();
 		process_input();
 	//	update();
 	//	draw();
 	}
 
 	destroy_window();
-
+	free(global);
 	return 0;
 }
 
@@ -81,6 +80,19 @@ void process_input(void){
 		case SDL_KEYDOWN:
 			if (event.key.keysym.sym == SDLK_ESCAPE){
 				global->running = FALSE;
+			}
+			break;
+		case SDL_MOUSEBUTTONUP:
+			if (global->state == GAME_PREPARE){
+				if(event.button.button == SDL_BUTTON_LEFT &&
+                	event.button.x >= wel_bt_0.rect.x &&
+                	event.button.x <= (wel_bt_0.rect.x + wel_bt_0.rect.w) &&
+                	event.button.y >= wel_bt_0.rect.y &&
+                	event.button.y <= (wel_bt_0.rect.y + wel_bt_0.rect.h)) 
+				{
+            		wel_bt_0.pressed = TRUE;
+					global->state = GAME_PICK;
+        		}
 			}
 			break;
 		default:
