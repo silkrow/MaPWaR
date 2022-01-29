@@ -37,11 +37,6 @@ int setup(void){
 		return FALSE;
 	}	
 
-	if (TTF_Init()){
-		fprintf(stderr, "Error initializing SDL_ttf.\n");
-		return FALSE;
-	}
-
 	global->fps = FPS;
 	global->spf = FRAME_TARGET_TIME;
 	global->window_width = WINDOW_WIDTH;
@@ -65,13 +60,6 @@ int setup(void){
 		fprintf(stderr, "Error initializing SDL window.\n");
 		return FALSE;
 	}
-
-	//Initialize PNG loading
-    int imgFlags = IMG_INIT_PNG;
-    if(!( IMG_Init(imgFlags) & imgFlags )){
-		fprintf(stderr, "Error initializing SDL image.\n");
-        return FALSE;
-    }
 
 	global->renderer = SDL_CreateRenderer(
 			global->window,

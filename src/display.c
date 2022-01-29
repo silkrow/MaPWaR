@@ -17,7 +17,7 @@ void display_prepare(void){
 
 	SDL_Surface * background = NULL;
 
-	background = SDL_LoadBMP("./resources/images/bg.bmp");
+	background = SDL_Load("./resources/images/bg.bmp");
     if (background == NULL)
     {
         fprintf(stderr, "Unable to load image.\n");
@@ -35,7 +35,18 @@ void display_picking(void){}
 int display_load_files(void) {
     //Load all files necessary to display.
 	
-	
+	// Font
+	if (TTF_Init()){
+		fprintf(stderr, "Error initializing SDL_ttf.\n");
+		return FALSE;
+	}
+
+	//Initialize PNG loading
+    int imgFlags = IMG_INIT_PNG;
+    if(!( IMG_Init(imgFlags) & imgFlags )){
+		fprintf(stderr, "Error initializing SDL image.\n");
+        return FALSE;
+    }
 
 	//Get window surface
     global->screenSur = SDL_GetWindowSurface(global->window);
