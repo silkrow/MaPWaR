@@ -65,6 +65,14 @@ int setup(void){
 		fprintf(stderr, "Error initializing SDL window.\n");
 		return FALSE;
 	}
+
+	//Initialize PNG loading
+    int imgFlags = IMG_INIT_PNG;
+    if(!( IMG_Init(imgFlags) & imgFlags )){
+		fprintf(stderr, "Error initializing SDL image.\n");
+        return FALSE;
+    }
+
 	global->renderer = SDL_CreateRenderer(
 			global->window,
 			-1, // Default.
