@@ -6,6 +6,7 @@
  */
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 
 /////////////
 //enums
@@ -46,9 +47,11 @@ typedef struct globalSDL
     /* global SDL objects */
     SDL_Window * window;
     SDL_Renderer * renderer;
+	SDL_Surface * screenSur;
 
     /* Game running flag */
     int running;
+	
 
     /* Game is state base */
     gameState state;

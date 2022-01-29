@@ -9,7 +9,7 @@
 #
 
 build:
-	gcc -Wall -std=c99 ./src/*.c -lSDL2 -o MaPWaR -I ./include
+	gcc -Wall -std=c11 ./src/*.c -lSDL2 -lSDL2_ttf -o MaPWaR -I ./include
 
 run:
 	./MaPWaR

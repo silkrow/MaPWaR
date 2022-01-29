@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 
 #include "con.h"
 #include "main.h"
@@ -13,15 +14,14 @@ int main(void){
 	global = malloc(sizeof(GlobalSDL));
 
 	if(!setup()) return 0; // Setting up the global variable.
-
+	if(!display_load_files()) return 0;
 
 	display_prepare();
-	while(global->running){
-
-		process_input();
-	//	update();
+//	while(global->running){
+//		process_input(); // Grab the infomation for further updating.
+//		update();
 	//	draw();
-	}
+//	}
 
 	destroy_window();
 	free(global);
@@ -31,26 +31,33 @@ int main(void){
 ////////////////////////////////////////////
 int setup(void){
 	if (SDL_Init(SDL_INIT_EVERYTHING)){
-		fprintf(stderr, "Error initializing SDL>\n");
+		fprintf(stderr, "Error initializing SDL.\n");
 		return FALSE;
 	}	
+
+	if (TTF_Init()){
+		fprintf(stderr, "Error initializing SDL_ttf.\n");
+		return FALSE;
+	}
+
 	global->fps = FPS;
 	global->spf = FRAME_TARGET_TIME;
 	global->window_width = WINDOW_WIDTH;
 	global->window_height = WINDOW_HEIGHT;
 	global->window = NULL;
 	global->renderer = NULL;
+	global->screenSur = NULL;
 	global->running = TRUE;
 	global->state = GAME_PREPARE; 
 	global->last_frame_time = 0;
 
 	global->window = SDL_CreateWindow(
 			"MaPWaR", 
-			SDL_WINDOWPOS_CENTERED,
-			SDL_WINDOWPOS_CENTERED,
+			SDL_WINDOWPOS_UNDEFINED,
+			SDL_WINDOWPOS_UNDEFINED,
 			global->window_width,
 			global->window_height,
-			SDL_WINDOW_OPENGL
+			SDL_WINDOW_SHOWN
 			);
 	if (!global->window){
 		fprintf(stderr, "Error initializing SDL window.\n");
@@ -94,6 +101,21 @@ void process_input(void){
 					global->state = GAME_PICK;
         		}
 			}
+			break;
+		default:
+			break;
+	}
+}
+
+void update(void){
+	if (!global->running) return;
+
+	switch(global->state){
+		case GAME_PREPARE:
+			display_prepare();
+			break;
+		case GAME_PICK:
+			display_picking();
 			break;
 		default:
 			break;
