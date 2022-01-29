@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_image.h>
 
 #include "con.h"
 #include "main.h"
@@ -17,11 +18,12 @@ int main(void){
 	if(!display_load_files()) return 0;
 
 	display_prepare();
-//	while(global->running){
-//		process_input(); // Grab the infomation for further updating.
+	while(global->running){
+		SDL_Delay((int)global->spf);
+		process_input(); // Grab the infomation for further updating.
 //		update();
 	//	draw();
-//	}
+	}
 
 	destroy_window();
 	free(global);
@@ -89,19 +91,19 @@ void process_input(void){
 				global->running = FALSE;
 			}
 			break;
-		case SDL_MOUSEBUTTONUP:
-			if (global->state == GAME_PREPARE){
-				if(event.button.button == SDL_BUTTON_LEFT &&
-                	event.button.x >= wel_bt_0.rect.x &&
-                	event.button.x <= (wel_bt_0.rect.x + wel_bt_0.rect.w) &&
-                	event.button.y >= wel_bt_0.rect.y &&
-                	event.button.y <= (wel_bt_0.rect.y + wel_bt_0.rect.h)) 
-				{
-            		wel_bt_0.pressed = TRUE;
-					global->state = GAME_PICK;
-        		}
-			}
-			break;
+//		case SDL_MOUSEBUTTONUP:
+//			if (global->state == GAME_PREPARE){
+//				if(event.button.button == SDL_BUTTON_LEFT &&
+  //              	event.button.x >= wel_bt_0.rect.x &&
+    //            	event.button.x <= (wel_bt_0.rect.x + wel_bt_0.rect.w) &&
+      //          	event.button.y >= wel_bt_0.rect.y &&
+        //        	event.button.y <= (wel_bt_0.rect.y + wel_bt_0.rect.h)) 
+		//		{
+          //  		wel_bt_0.pressed = TRUE;
+			//		global->state = GAME_PICK;
+        	//	}
+		//	}
+		//	break;
 		default:
 			break;
 	}

@@ -1,5 +1,6 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_image.h>
 #include <string.h>
 
 #include "display.h"
@@ -27,11 +28,6 @@ void display_prepare(void){
 
     //Update the surface
     SDL_UpdateWindowSurface(global->window);
-
-    //Wait two seconds
-    SDL_Delay(2000);
-
-	SDL_FreeSurface(background);
 }
 
 void display_picking(void){}
@@ -39,6 +35,8 @@ void display_picking(void){}
 int display_load_files(void) {
     //Load all files necessary to display.
 	
+	
+
 	//Get window surface
     global->screenSur = SDL_GetWindowSurface(global->window);
 
