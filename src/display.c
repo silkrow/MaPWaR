@@ -17,7 +17,7 @@ void display_prepare(void){
 
 	SDL_Surface * background = NULL;
 
-	background = SDL_Load("./resources/images/bg.bmp");
+	background = IMG_Load("./resources/images/bg.bmp");
     if (background == NULL)
     {
         fprintf(stderr, "Unable to load image.\n");
