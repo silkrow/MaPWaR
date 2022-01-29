@@ -8,6 +8,5 @@
 ////////////
 int initialize_window(void);
 int setup(void);
-void destroy_window(void);
 void process_input(void);
 void update(void);

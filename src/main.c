@@ -15,7 +15,7 @@ int main(void){
 	global = malloc(sizeof(GlobalSDL));
 
 	if(!setup()) return 0; // Setting up the global variable.
-	if(!display_load_files()) return 0;
+	if(!display_loadFiles()) return 0;
 
 	display_prepare();
 	while(global->running){
@@ -131,9 +131,3 @@ void update(void){
 //	ball.x += 5 * delta_time;
 //	ball.y += 5 * delta_time;
 //}
-
-void destroy_window(void){
-	SDL_DestroyRenderer(global->renderer);
-	SDL_DestroyWindow(global->window);
-	SDL_Quit();
-}

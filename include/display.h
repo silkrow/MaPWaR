@@ -7,4 +7,5 @@
  */
 void display_prepare(void);
 void display_picking(void);
-int display_load_files(void);
+int display_loadFiles(void);
+void destroy_window(void);
