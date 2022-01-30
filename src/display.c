@@ -46,14 +46,36 @@ void display_prepare(void){
 	SDL_RenderFillRect(global->renderer, &(wel_bt_0.box));
 
 	SDL_RenderCopy(global->renderer, texture, NULL, &txtBox);
-	SDL_FreeSurface(surface);
 	
 	SDL_RenderPresent(global->renderer);
 
+	
+	SDL_FreeSurface(surface);
+	SDL_FreeSurface(background);
 }
 
 void display_picking(void){
+	SDL_Surface * background = NULL;
+
+	background = IMG_Load("./resources/images/ts.png");
+    if (background == NULL)
+    {
+        fprintf(stderr, "Unable to load image.\n");
+       	return;
+    }
+	
+	SDL_SetRenderDrawColor(global->renderer, 125, 150, 125, 80);
 	SDL_RenderClear(global->renderer);
+
+	SDL_Rect picture = {
+		300,
+		0,
+		500,
+		700
+	};
+	SDL_Texture * texture = SDL_CreateTextureFromSurface(global->renderer, background);
+	SDL_RenderCopy(global->renderer, texture, NULL, &picture);
+
 	
 	SDL_RenderPresent(global->renderer);
 }
