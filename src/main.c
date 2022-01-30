@@ -20,9 +20,8 @@ int main(void){
 	display_prepare();
 	while(global->running){
 		SDL_Delay((int)global->spf);
+
 		process_input(); // Grab the infomation for further updating.
-//		update();
-	//	draw();
 	}
 
 	destroy_window();
@@ -77,7 +76,7 @@ int setup(void){
 void process_input(void){
 	SDL_Event event;
 	SDL_PollEvent(&event);
-	
+
 	switch(event.type){
 		case SDL_QUIT:
 			global->running = FALSE;
@@ -87,33 +86,18 @@ void process_input(void){
 				global->running = FALSE;
 			}
 			break;
-//		case SDL_MOUSEBUTTONUP:
-//			if (global->state == GAME_PREPARE){
-//				if(event.button.button == SDL_BUTTON_LEFT &&
-  //              	event.button.x >= wel_bt_0.rect.x &&
-    //            	event.button.x <= (wel_bt_0.rect.x + wel_bt_0.rect.w) &&
-      //          	event.button.y >= wel_bt_0.rect.y &&
-        //        	event.button.y <= (wel_bt_0.rect.y + wel_bt_0.rect.h)) 
-		//		{
-          //  		wel_bt_0.pressed = TRUE;
-			//		global->state = GAME_PICK;
-        	//	}
-		//	}
-		//	break;
-		default:
-			break;
-	}
-}
-
-void update(void){
-	if (!global->running) return;
-
-	switch(global->state){
-		case GAME_PREPARE:
-			display_prepare();
-			break;
-		case GAME_PICK:
-			display_picking();
+		case SDL_MOUSEBUTTONUP:
+			if (global->state == GAME_PREPARE){
+				if(event.button.button == SDL_BUTTON_LEFT &&
+                	event.button.x >= wel_bt_0.box.x &&
+                	event.button.x <= (wel_bt_0.box.x + wel_bt_0.box.w) &&
+                	event.button.y >= wel_bt_0.box.y &&
+                	event.button.y <= (wel_bt_0.box.y + wel_bt_0.box.h)) 
+				{
+					global->state = GAME_PICK;
+					display_picking();
+        		}
+			}
 			break;
 		default:
 			break;

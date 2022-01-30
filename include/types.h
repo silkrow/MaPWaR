@@ -18,7 +18,6 @@ typedef enum
 	GAME_PICK,
 	GAME_START,
 	GAME_END,
-	GAME_EXIT
 } gameState; 
 
 typedef enum
@@ -72,6 +71,7 @@ typedef struct playerInfo
 } Player;
 
 typedef struct {
-    SDL_Rect rect;    // dimensions of button
-    int pressed;
+    SDL_Rect box;    // dimensions of the button
+	SDL_Color txtColor;
+	char txt[20];
 } Button;
