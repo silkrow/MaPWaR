@@ -9,7 +9,8 @@
 #include "display.h"
 
 GlobalSDL* global = NULL;
-Button wel_bt_0;
+Button bt_0;
+Button bt_1;
 
 int main(void){
 	global = malloc(sizeof(GlobalSDL));
@@ -17,17 +18,85 @@ int main(void){
 	if(!setup()) return 0; // Setting up the global variable.
 	if(!display_loadFiles()) return 0;
 
-	display_prepare();
+	setup_prepare();
 	while(global->running){
-		SDL_Delay((int)global->spf);
-
-		process_input(); // Grab the infomation for further updating.
+		switch (global->state){
+			case GAME_PREPARE:
+				process_prepare();
+				break;
+			case GAME_PICK:
+				process_picking();
+				break;
+			default:
+				break;
+		}
 	}
 
 	destroy_window();
 	free(global);
 	return 0;
 }
+
+void setup_prepare(void){
+	display_prepare();
+}
+
+void setup_picking(void){
+	display_picking();
+}
+
+void process_prepare(void){
+	SDL_Event event;
+	SDL_PollEvent(&event);
+
+	switch(event.type){
+		case SDL_QUIT:
+			global->running = FALSE;
+			return;
+		case SDL_KEYDOWN:
+			if (event.key.keysym.sym == SDLK_ESCAPE){
+				global->running = FALSE;
+				return;
+			}
+			break;
+		case SDL_MOUSEBUTTONDOWN:
+			if(event.button.button == SDL_BUTTON_LEFT &&
+                event.button.x >= bt_0.box.x &&
+                event.button.x <= (bt_0.box.x + bt_0.box.w) &&
+                event.button.y >= bt_0.box.y &&
+                event.button.y <= (bt_0.box.y + bt_0.box.h)) 
+			{
+				global->state = GAME_PICK;
+				setup_picking();
+				return;
+        	}
+			break;
+		default:
+			break;
+	}
+	SDL_Delay((int)global->spf);
+}
+
+void process_picking(void){
+	SDL_Event event;
+	SDL_PollEvent(&event);
+
+	switch(event.type){
+		case SDL_QUIT:
+			global->running = FALSE;
+			return;
+		case SDL_KEYDOWN:
+			if (event.key.keysym.sym == SDLK_ESCAPE){
+				global->running = FALSE;
+				return;
+			}
+			break;
+		default:
+			break;
+	}
+	SDL_Delay((int)global->spf);
+}
+
 
 ////////////////////////////////////////////
 int setup(void){
@@ -73,36 +142,6 @@ int setup(void){
 	return TRUE;
 }
 
-void process_input(void){
-	SDL_Event event;
-	SDL_PollEvent(&event);
-
-	switch(event.type){
-		case SDL_QUIT:
-			global->running = FALSE;
-			break;
-		case SDL_KEYDOWN:
-			if (event.key.keysym.sym == SDLK_ESCAPE){
-				global->running = FALSE;
-			}
-			break;
-		case SDL_MOUSEBUTTONUP:
-			if (global->state == GAME_PREPARE){
-				if(event.button.button == SDL_BUTTON_LEFT &&
-                	event.button.x >= wel_bt_0.box.x &&
-                	event.button.x <= (wel_bt_0.box.x + wel_bt_0.box.w) &&
-                	event.button.y >= wel_bt_0.box.y &&
-                	event.button.y <= (wel_bt_0.box.y + wel_bt_0.box.h)) 
-				{
-					global->state = GAME_PICK;
-					display_picking();
-        		}
-			}
-			break;
-		default:
-			break;
-	}
-}
 
 //void update(void){
 //	int time_to_wait = FRAME_TARGET_TIME - (SDL_GetTicks() - last_frame_time);

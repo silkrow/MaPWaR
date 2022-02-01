@@ -7,4 +7,5 @@
 #include "types.h"
 
 extern GlobalSDL* global; 
-extern Button wel_bt_0;
+extern Button bt_0;
+extern Button bt_1;

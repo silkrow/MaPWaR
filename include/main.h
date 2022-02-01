@@ -8,4 +8,7 @@
 ////////////
 int initialize_window(void);
 int setup(void);
-void process_input(void);
+void setup_prepare(void);
+void process_prepare(void);
+void setup_picking(void);
+void process_picking(void);

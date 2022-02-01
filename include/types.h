@@ -71,7 +71,6 @@ typedef struct playerInfo
 } Player;
 
 typedef struct {
-    SDL_Rect box;    // dimensions of the button
-	SDL_Color txtColor;
-	char txt[20];
+	SDL_Texture * figure; // The main part to be displayed.
+    SDL_Rect box;    // The valid part of the button.
 } Button;
