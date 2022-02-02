@@ -54,31 +54,36 @@ void display_prepare(void){
 }
 
 void display_picking(void){
-	SDL_Surface * background = NULL;
-
-	background = IMG_Load("./resources/images/ts.png");
-    if (background == NULL)
-    {
-        fprintf(stderr, "Unable to load image.\n");
-       	return;
-    }
-	
 	SDL_SetRenderDrawColor(global->renderer, 125, 150, 125, 80);
 	SDL_RenderClear(global->renderer);
+	SDL_Rect temp;
 
-	SDL_Rect picture = {
-		300,
-		0,
-		500,
-		700
-	};
-	SDL_Texture * texture = SDL_CreateTextureFromSurface(global->renderer, background);
-	SDL_RenderCopy(global->renderer, texture, NULL, &picture);
+	SDL_Surface * background = NULL;
 
-	picture.x = 800;
+	SDL_SetRenderDrawColor(global->renderer, 255, 0, 0, 255);
+	background = IMG_Load("./resources/images/ts.png");
+	bt_0.box.x = 360; 
+	bt_0.box.y = 100;
+	bt_0.box.w = 340;
+	bt_0.box.h = 580;
+	SDL_RenderFillRect(global->renderer, &(bt_0.box));	
+
+	bt_0.figure = SDL_CreateTextureFromSurface(global->renderer, background);
+	temp.x = 300; 
+	temp.y = 0;
+	temp.w = 500;
+	temp.h = 700;
+
+	SDL_RenderCopy(global->renderer, bt_0.figure, NULL, &(temp));
+	/////
 	background = IMG_Load("./resources/images/jw.png");
-	texture = SDL_CreateTextureFromSurface(global->renderer, background);
-	SDL_RenderCopy(global->renderer, texture, NULL, &picture);
+	bt_1.figure = SDL_CreateTextureFromSurface(global->renderer, background);
+	temp.x = 800; 
+	temp.y = 0;
+	temp.w = 500;
+	temp.h = 700;
+
+	SDL_RenderCopy(global->renderer, bt_1.figure, NULL, &(temp));
 
 	
 	SDL_RenderPresent(global->renderer);
@@ -93,7 +98,7 @@ int display_loadFiles(void) {
 		fprintf(stderr, "Error initializing SDL_ttf.\n");
 		return FALSE;
 	}
-	font = TTF_OpenFont("./resources/font/Roboto-Bold.ttf", 52);
+	font = TTF_OpenFont("./resources/font/CaviarDreams.ttf", 52);
 	if (font == NULL){
 		fprintf(stderr, "Error loading font.\n");
 		return FALSE;
@@ -119,8 +124,16 @@ int display_loadFiles(void) {
 
 void display_button(Button* bt){
 
-	SDL_RenderFillRect(global->renderer, &(bt->box));
+	SDL_Rect theBox = {
+		bt->box.x - 15,
+		bt->box.y - 15,
+		bt->box.w + 30,
+		bt->box.h + 30
+	};
+
+	SDL_RenderFillRect(global->renderer, &(theBox)); // Display the box containing the symbol of the text with a colored rect.
 	SDL_RenderCopy(global->renderer, bt->figure, NULL, &(bt->box));
+	bt->box = theBox;
 }
 
 void destroy_window(void){
