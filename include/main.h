@@ -12,3 +12,4 @@ void setup_prepare(void);
 void process_prepare(void);
 void setup_picking(void);
 void process_picking(void);
+int clicked(Button *, float, float);

@@ -4,8 +4,8 @@
 #include <SDL2/SDL_image.h>
 
 #include "con.h"
-#include "main.h"
 #include "types.h"
+#include "main.h"
 #include "display.h"
 
 GlobalSDL* global = NULL;
@@ -61,10 +61,7 @@ void process_prepare(void){
 			break;
 		case SDL_MOUSEBUTTONDOWN:
 			if(event.button.button == SDL_BUTTON_LEFT &&
-                event.button.x >= bt_0.box.x &&
-                event.button.x <= (bt_0.box.x + bt_0.box.w) &&
-                event.button.y >= bt_0.box.y &&
-                event.button.y <= (bt_0.box.y + bt_0.box.h)) 
+				clicked(&bt_0, event.button.x, event.button.y))
 			{
 				global->state = GAME_PICK;
 				setup_picking();
@@ -140,6 +137,14 @@ int setup(void){
 	}
 
 	return TRUE;
+}
+
+int clicked(Button * bt, float x, float y){
+	if(	x >= bt->box.x &&
+        x <= (bt->box.x + bt->box.w) &&
+        y >= bt->box.y &&
+        y <= (bt->box.y + bt->box.h)) return TRUE;
+	return FALSE;
 }
 
 
