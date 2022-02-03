@@ -22,3 +22,15 @@
 #define WB_G 40
 #define WB_B 80
 #define WB_A 160
+
+// The color parameters of teams. 
+#define RED_R 220
+#define RED_G 0
+#define RED_B 0
+#define RED_A 255
+#define BLUE_R 0
+#define BLUE_G 0
+#define BLUE_B 255
+#define BLUE_A 255
+
+

@@ -60,7 +60,7 @@ void display_picking(void){
 
 	SDL_Surface * background = NULL;
 
-	SDL_SetRenderDrawColor(global->renderer, 255, 0, 0, 255);
+	SDL_SetRenderDrawColor(global->renderer, RED_R, RED_G, RED_B, RED_A);
 	background = IMG_Load("./resources/images/ts.png");
 	bt_0.box.x = 360; 
 	bt_0.box.y = 100;
@@ -76,9 +76,17 @@ void display_picking(void){
 
 	SDL_RenderCopy(global->renderer, bt_0.figure, NULL, &(temp));
 	/////
+	
+	SDL_SetRenderDrawColor(global->renderer, BLUE_R, BLUE_G, BLUE_B, BLUE_A);
 	background = IMG_Load("./resources/images/jw.png");
+	bt_0.box.x = 900; 
+	bt_0.box.y = 100;
+	bt_0.box.w = 340;
+	bt_0.box.h = 580;
+	SDL_RenderFillRect(global->renderer, &(bt_0.box));	
+
 	bt_1.figure = SDL_CreateTextureFromSurface(global->renderer, background);
-	temp.x = 800; 
+	temp.x = 840; 
 	temp.y = 0;
 	temp.w = 500;
 	temp.h = 700;
