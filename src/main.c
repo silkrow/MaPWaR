@@ -6,6 +6,7 @@
 #include "con.h"
 #include "types.h"
 #include "main.h"
+#include "game.h"
 #include "display.h"
 
 GlobalSDL* global = NULL;
@@ -26,6 +27,9 @@ int main(void){
 				break;
 			case GAME_PICK:
 				process_picking();
+				break;
+			case GAME_START:
+				run_game();
 				break;
 			default:
 				break;
@@ -88,6 +92,24 @@ void process_picking(void){
 				return;
 			}
 			break;
+		case SDL_MOUSEBUTTONDOWN:
+			if(event.button.button == SDL_BUTTON_LEFT &&
+				clicked(&bt_0, event.button.x, event.button.y))
+			{
+				global->state = GAME_START;
+				set_game(RED);
+				return;
+        	}
+			if(event.button.button == SDL_BUTTON_LEFT &&
+				clicked(&bt_1, event.button.x, event.button.y))
+			{
+				global->state = GAME_START;
+				set_game(BLUE);
+				return;
+        	}
+
+			break;
+
 		default:
 			break;
 	}

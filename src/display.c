@@ -79,11 +79,11 @@ void display_picking(void){
 	
 	SDL_SetRenderDrawColor(global->renderer, BLUE_R, BLUE_G, BLUE_B, BLUE_A);
 	background = IMG_Load("./resources/images/jw.png");
-	bt_0.box.x = 900; 
-	bt_0.box.y = 100;
-	bt_0.box.w = 340;
-	bt_0.box.h = 580;
-	SDL_RenderFillRect(global->renderer, &(bt_0.box));	
+	bt_1.box.x = 900; 
+	bt_1.box.y = 100;
+	bt_1.box.w = 340;
+	bt_1.box.h = 580;
+	SDL_RenderFillRect(global->renderer, &(bt_1.box));	
 
 	bt_1.figure = SDL_CreateTextureFromSurface(global->renderer, background);
 	temp.x = 840; 
@@ -98,6 +98,24 @@ void display_picking(void){
 	SDL_FreeSurface(background);
 }
 
+void display_map(){ // Temporarily test.
+	SDL_SetRenderDrawColor(global->renderer, BG_R, BG_G, BG_B, BG_A);
+	SDL_RenderClear(global->renderer);
+	
+	SDL_SetRenderDrawColor(global->renderer, 0, 0, 0, 255);
+	SDL_RenderDrawLine(global->renderer,
+                       80, 0, 80, 800);
+
+	SDL_RenderPresent(global->renderer);
+}
+
+
+
+
+
+
+
+////////////////////////////////////
 int display_loadFiles(void) {
     //Load all files necessary to display.
 	

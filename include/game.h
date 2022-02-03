@@ -5,3 +5,4 @@
  *
  */
 void run_game(void);
+void set_game(armyType);
