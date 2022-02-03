@@ -98,17 +98,33 @@ void display_picking(void){
 	SDL_FreeSurface(background);
 }
 
-void display_map(){ // Temporarily test.
+void playlayout_basic(){ // Temporarily test.
 	SDL_SetRenderDrawColor(global->renderer, BG_R, BG_G, BG_B, BG_A);
 	SDL_RenderClear(global->renderer);
 	
+	// Display the grids of the map.
 	SDL_SetRenderDrawColor(global->renderer, 0, 0, 0, 255);
-	SDL_RenderDrawLine(global->renderer,
-                       80, 0, 80, 800);
+	for (int i = 0; i < 15; i++)
+		SDL_RenderDrawLine(global->renderer,
+       		80 * (i + 1), 0, 80 * (i + 1), 800);
+	for (int i = 0; i < 9; i++)
+		SDL_RenderDrawLine(global->renderer,
+        	0, 80 * (i + 1), 1200, 80 * (i + 1));
+	
+	// Display the operation area on the right side.
+	SDL_SetRenderDrawColor(global->renderer, 180, 180, 50, 255);
+	SDL_Rect desk = {
+		1205,
+		0,
+		395,
+		800
+		};
+	SDL_RenderFillRect(global->renderer, &desk);
+
 
 	SDL_RenderPresent(global->renderer);
-}
 
+}
 
 
 

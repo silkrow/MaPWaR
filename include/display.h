@@ -10,4 +10,4 @@ void display_picking(void);
 int display_loadFiles(void);
 void destroy_window(void);
 void display_button(Button*);
-void display_map(void);
+void playlayout_basic(void);

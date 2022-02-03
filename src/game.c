@@ -20,7 +20,7 @@ Player * p2;
 ///////////
 void set_game(armyType teamType){
 
-	display_map();
+	playlayout_basic();
 
 }
 
