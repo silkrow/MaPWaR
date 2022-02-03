@@ -41,7 +41,7 @@ void display_prepare(void){
 		txt_h
 	};
 	bt_0.box = txtBox;
-	SDL_SetRenderDrawColor(global->renderer, 25, 125, 125, 205);
+	SDL_SetRenderDrawColor(global->renderer, 0, 150, 0, 205);
 
 	display_button(&(bt_0));
 
@@ -54,7 +54,7 @@ void display_prepare(void){
 }
 
 void display_picking(void){
-	SDL_SetRenderDrawColor(global->renderer, 125, 150, 125, 80);
+	SDL_SetRenderDrawColor(global->renderer, BG_R, BG_G, BG_B, BG_A);
 	SDL_RenderClear(global->renderer);
 	SDL_Rect temp;
 
@@ -134,9 +134,9 @@ void display_button(Button* bt){
 
 	SDL_Rect theBox = {
 		bt->box.x - 15,
-		bt->box.y - 15,
+		bt->box.y - 10,
 		bt->box.w + 30,
-		bt->box.h + 30
+		bt->box.h + 20
 	};
 
 	SDL_RenderFillRect(global->renderer, &(theBox)); // Display the box containing the symbol of the text with a colored rect.

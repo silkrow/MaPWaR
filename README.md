@@ -1,5 +1,7 @@
 # MaPWaR
 
+![resources/images/both.png](tempLogo)
+
 This is a game based on C & SDL.
 
 ## Introduction

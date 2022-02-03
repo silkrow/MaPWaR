@@ -10,10 +10,10 @@
 #define RESOURCE_PATH "./resources/"
 
 // The color parameters of background. 
-#define BG_R 40
-#define BG_G 90
-#define BG_B 40
-#define BG_A 255
+#define BG_R 125
+#define BG_G 150
+#define BG_B 125
+#define BG_A 80
 
 // Parameters for welcome buttons.
 #define WB_W 200
