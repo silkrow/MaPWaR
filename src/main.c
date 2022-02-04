@@ -37,6 +37,7 @@ int main(void){
 	}
 
 	destroy_window();
+
 	free(global);
 	return 0;
 }
@@ -57,12 +58,12 @@ void process_prepare(void){
 		case SDL_QUIT:
 			global->running = FALSE;
 			return;
-		case SDL_KEYDOWN:
-			if (event.key.keysym.sym == SDLK_ESCAPE){
-				global->running = FALSE;
-				return;
-			}
-			break;
+		//case SDL_KEYDOWN:
+		//	if (event.key.keysym.sym == SDLK_ESCAPE){
+		//		global->running = FALSE;
+		//		return;
+		//	}
+		//	break;
 		case SDL_MOUSEBUTTONDOWN:
 			if(event.button.button == SDL_BUTTON_LEFT &&
 				clicked(&bt_0, event.button.x, event.button.y))
@@ -88,7 +89,9 @@ void process_picking(void){
 			return;
 		case SDL_KEYDOWN:
 			if (event.key.keysym.sym == SDLK_ESCAPE){
-				global->running = FALSE;
+				global->state = GAME_PREPARE;
+				
+				setup_prepare();
 				return;
 			}
 			break;

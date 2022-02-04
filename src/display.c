@@ -15,6 +15,9 @@ TTF_Font * font = NULL;
  * Set the preparing window.
  */
 void display_prepare(void){
+
+	SDL_SetRenderDrawColor(global->renderer, BG_R, BG_G, BG_B, BG_A);
+	SDL_RenderClear(global->renderer);
 	SDL_Surface * background = NULL;
 
 	background = IMG_Load("./resources/images/bg.bmp");
