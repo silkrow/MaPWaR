@@ -3,6 +3,7 @@
 #include <SDL2/SDL_image.h>
 #include <string.h>
 
+#include "extern_game.h"
 #include "extern.h"
 #include "display.h"
 #include "con.h"
@@ -105,14 +106,9 @@ void playlayout_basic(){ // Temporarily test.
 	SDL_SetRenderDrawColor(global->renderer, BG_R, BG_G, BG_B, BG_A);
 	SDL_RenderClear(global->renderer);
 	
-	// Display the grids of the map.
 	SDL_SetRenderDrawColor(global->renderer, 0, 0, 0, 255);
-	for (int i = 0; i < 15; i++)
-		SDL_RenderDrawLine(global->renderer,
-       		80 * (i + 1), 0, 80 * (i + 1), 800);
-	for (int i = 0; i < 9; i++)
-		SDL_RenderDrawLine(global->renderer,
-        	0, 80 * (i + 1), 1200, 80 * (i + 1));
+	SDL_RenderDrawLine(global->renderer,
+        	1200, 0, 1200, 800);
 	
 	// Display the operation area on the right side.
 	SDL_SetRenderDrawColor(global->renderer, 180, 180, 50, 255);
@@ -188,4 +184,18 @@ void destroy_window(void){
 	TTF_Quit();	
 	IMG_Quit();
 	SDL_Quit();
+}
+
+void display_land(void) {
+	for (int i = 0; i < 80; i++)
+		for (int j = 0; j < 120; j++)
+		{
+			SDL_SetRenderDrawColor(global->renderer,
+					BG_R - land[i][j].h*30, 
+					BG_G - land[i][j].h*30,
+					BG_B - land[i][j].h*30, 
+					BG_A);
+			SDL_RenderFillRect(global->renderer, &(land[i][j].box));
+		}
+	SDL_RenderPresent(global->renderer);
 }

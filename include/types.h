@@ -74,3 +74,4 @@ typedef struct {
 	SDL_Texture * figure; // The main part to be displayed.
     SDL_Rect box;    // The valid part of the button.
 } Button;
+

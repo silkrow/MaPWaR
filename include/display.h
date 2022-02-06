@@ -11,3 +11,4 @@ int display_loadFiles(void);
 void destroy_window(void);
 void display_button(Button*);
 void playlayout_basic(void);
+void display_land(void);
