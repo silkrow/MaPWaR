@@ -67,7 +67,9 @@ typedef struct playerInfo
 {
 	playerType playertype;
 	armyType armytype;
-
+	int side; // 0 for right, 1 for left.
+	int birth_x;
+	int birth_y;
 } Player;
 
 typedef struct {

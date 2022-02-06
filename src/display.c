@@ -120,13 +120,7 @@ void playlayout_basic(){ // Temporarily test.
 		};
 	SDL_RenderFillRect(global->renderer, &desk);
 
-
-	SDL_RenderPresent(global->renderer);
-
 }
-
-
-
 
 
 
@@ -186,16 +180,32 @@ void destroy_window(void){
 	SDL_Quit();
 }
 
-void display_land(void) {
+void draw_land(void) {
 	for (int i = 0; i < 80; i++)
 		for (int j = 0; j < 120; j++)
 		{
 			SDL_SetRenderDrawColor(global->renderer,
-					BG_R - land[i][j].h*30, 
-					BG_G - land[i][j].h*30,
-					BG_B - land[i][j].h*30, 
+					BG_R - land[i][j].h*20, 
+					BG_G - land[i][j].h*20,
+					BG_B - land[i][j].h*20, 
 					BG_A);
 			SDL_RenderFillRect(global->renderer, &(land[i][j].box));
 		}
+}
+
+void display_birth_place(int x1, int y1, int x2, int y2){
+	SDL_SetRenderDrawColor(global->renderer, 0, 0, 0, 255);
+	SDL_Rect rect = {
+		y1 * 10,
+		x1 * 10,
+		10,
+		10
+	};
+	SDL_RenderDrawRect(global->renderer, &rect);
+	
+	rect.x = y2*10;
+	rect.y = x2*10;
+
+	SDL_RenderDrawRect(global->renderer, &rect);
 	SDL_RenderPresent(global->renderer);
 }

@@ -3,6 +3,7 @@
 #include <SDL2/SDL_image.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "con.h"
 #include "extern.h"
@@ -25,6 +26,8 @@ Grid land[80][120];
 ///////////
 void set_game(armyType teamType){
 
+	srand (time(NULL));
+
 	p1 = malloc(sizeof(Player));
 	p2 = malloc(sizeof(Player));
 //// Players' infomation.
@@ -34,6 +37,8 @@ void set_game(armyType teamType){
 	p1->armytype = teamType;
 	p2->armytype = (teamType == RED)? BLUE:RED;
 
+	p1->side = 0;
+	p2->side = 1;
 
 //// Basic display setting up.
 	playlayout_basic();
@@ -82,9 +87,16 @@ void set_map(void){
 			land[i][j].h = 0;
 		}
 
-	random_mountain(10 + rand() % 6);
+	random_mountain(15 + rand() % 6);
 	
-	display_land();
+	draw_land();
+
+	generate_birth_place(p1);
+	generate_birth_place(p2);
+
+	display_birth_place(p1->birth_x, p1->birth_y,
+						p2->birth_x, p2->birth_y);
+
 }
 
 void random_mountain(int n) { // Generate n mountains randomly.
@@ -122,10 +134,12 @@ void h_down(int x, int y){
 				i + x < 0 ||
 				i + x >= 80 ||
 				j + y < 0 ||
-				j + y >= 120) continue;
+				j + y >= 120) continue; // Be careful!
 			
 			if (land[x + i][y + j].h == 0){
-				if (rand()% (4*abs(i) + 4*abs(j)) == 0) // Keep the same height.
+				if (rand()% (4*abs(i) + 4*abs(j)) == 0 || 
+					land[x][y].h * (rand() % 8) > 10) 
+				// Odd to keep the same height. Added some bias.
 				{	
 					land[x + i][y + j].h = land[x][y].h;
 				}
@@ -139,7 +153,47 @@ void h_down(int x, int y){
 			}
 
 		}
-
+	
 	for (int i = 0; i < s; i++)
 		h_down(x_update[i], y_update[i]);
-}			
+}
+
+void generate_birth_place(Player * p){
+	int y = (1 - p->side)*119; // Be careful!
+	int x = rand()% 80; // Be careful!
+	int f = TRUE;
+
+	for (int i = 0; i < 80; i++)
+		if (x + i >= 80 && x - i < 0) {break;}
+		else {
+			if (x + i < 80 && land[x + i][y].h == 0){
+				x = x + i;
+				f = FALSE;
+				break;
+			}
+			if (x - i >= 0 && land[x - i][y].h == 0){
+				x = x - i;
+				f = FALSE;
+				break;
+			}	
+		}
+
+	if (f){ // Unfortunately, no 0, so search for 1.
+		for (int i = 0; i < 80; i++)
+			if (x + i >= 80 && x - i < 0) {break;}
+			else {
+				if (x + i < 80 && land[x + i][y].h == 1){
+					x = x + i;
+					break;
+				}
+				if (x - i >= 0 && land[x - i][y].h == 1){
+					x = x - i;
+					break;
+				}	
+			}	
+	}
+	
+
+	p->birth_x = x;
+	p->birth_y = y;
+}

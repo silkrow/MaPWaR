@@ -11,4 +11,5 @@ int display_loadFiles(void);
 void destroy_window(void);
 void display_button(Button*);
 void playlayout_basic(void);
-void display_land(void);
+void draw_land(void);
+void display_birth_place(int, int, int, int);
