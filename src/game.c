@@ -20,7 +20,7 @@
 Player * p1; // By default, human player uses p1.
 Player * p2;
 
-Grid land[80][120];
+Grid land[ROW][COL];
 ///////////
 //functions
 ///////////
@@ -77,17 +77,17 @@ void destroy_game(void){
 }
 
 void set_map(void){
-	for (int i = 0; i < 80; i++)
-		for (int j = 0; j < 120; j++)
+	for (int i = 0; i < ROW; i++)
+		for (int j = 0; j < COL; j++)
 		{
-			land[i][j].box.x = j*10;
-			land[i][j].box.y = i*10;
-			land[i][j].box.w = 10;
-			land[i][j].box.h = 10;
+			land[i][j].box.x = j*GRID;
+			land[i][j].box.y = i*GRID;
+			land[i][j].box.w = GRID;
+			land[i][j].box.h = GRID;
 			land[i][j].h = 0;
 		}
 
-	random_mountain(15 + rand() % 6);
+	random_mountain(10 + rand() % 6);
 	
 	draw_land();
 
@@ -103,8 +103,8 @@ void random_mountain(int n) { // Generate n mountains randomly.
 	int H;
 	for (int k = 0; k < n; k++){
 		H = rand() % 3 + 2; // H from 2 to 4, representing the height.
-		int x = rand() % 80;
-		int y = rand() % 120;
+		int x = rand() % ROW;
+		int y = rand() % COL;
 		land[x][y].h = H;
 		h_down(x, y); // Recursively arrange the other grids for the mountain.
 	}
@@ -132,9 +132,9 @@ void h_down(int x, int y){
 		{
 			if ((i == 0 && j == 0) ||
 				i + x < 0 ||
-				i + x >= 80 ||
+				i + x >= ROW ||
 				j + y < 0 ||
-				j + y >= 120) continue; // Be careful!
+				j + y >= COL) continue; // Be careful!
 			
 			if (land[x + i][y + j].h == 0){
 				if (rand()% (4*abs(i) + 4*abs(j)) == 0 || 
@@ -159,14 +159,14 @@ void h_down(int x, int y){
 }
 
 void generate_birth_place(Player * p){
-	int y = (1 - p->side)*119; // Be careful!
-	int x = rand()% 80; // Be careful!
+	int y = (1 - p->side)*(COL - 1); // Be careful!
+	int x = rand()% ROW; // Be careful!
 	int f = TRUE;
 
-	for (int i = 0; i < 80; i++)
-		if (x + i >= 80 && x - i < 0) {break;}
+	for (int i = 0; i < ROW; i++)
+		if (x + i >= ROW && x - i < 0) {break;}
 		else {
-			if (x + i < 80 && land[x + i][y].h == 0){
+			if (x + i < ROW && land[x + i][y].h == 0){
 				x = x + i;
 				f = FALSE;
 				break;
@@ -179,10 +179,10 @@ void generate_birth_place(Player * p){
 		}
 
 	if (f){ // Unfortunately, no 0, so search for 1.
-		for (int i = 0; i < 80; i++)
-			if (x + i >= 80 && x - i < 0) {break;}
+		for (int i = 0; i < ROW; i++)
+			if (x + i >= ROW && x - i < 0) {break;}
 			else {
-				if (x + i < 80 && land[x + i][y].h == 1){
+				if (x + i < ROW && land[x + i][y].h == 1){
 					x = x + i;
 					break;
 				}

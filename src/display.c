@@ -108,15 +108,15 @@ void playlayout_basic(){ // Temporarily test.
 	
 	SDL_SetRenderDrawColor(global->renderer, 0, 0, 0, 255);
 	SDL_RenderDrawLine(global->renderer,
-        	1200, 0, 1200, 800);
+        	MAP_WIDTH, 0, MAP_WIDTH, MAP_HEIGHT);
 	
 	// Display the operation area on the right side.
 	SDL_SetRenderDrawColor(global->renderer, 180, 180, 50, 255);
 	SDL_Rect desk = {
-		1205,
+		5 + MAP_WIDTH,
 		0,
-		395,
-		800
+		WINDOW_WIDTH - 5 - MAP_WIDTH,
+		MAP_HEIGHT
 		};
 	SDL_RenderFillRect(global->renderer, &desk);
 
@@ -181,8 +181,8 @@ void destroy_window(void){
 }
 
 void draw_land(void) {
-	for (int i = 0; i < 80; i++)
-		for (int j = 0; j < 120; j++)
+	for (int i = 0; i < ROW; i++)
+		for (int j = 0; j < COL; j++)
 		{
 			SDL_SetRenderDrawColor(global->renderer,
 					BG_R - land[i][j].h*20, 
@@ -196,15 +196,15 @@ void draw_land(void) {
 void display_birth_place(int x1, int y1, int x2, int y2){
 	SDL_SetRenderDrawColor(global->renderer, 0, 0, 0, 255);
 	SDL_Rect rect = {
-		y1 * 10,
-		x1 * 10,
-		10,
-		10
+		y1 * GRID,
+		x1 * GRID,
+		GRID,
+		GRID
 	};
 	SDL_RenderDrawRect(global->renderer, &rect);
 	
-	rect.x = y2*10;
-	rect.y = x2*10;
+	rect.x = y2*GRID;
+	rect.y = x2*GRID;
 
 	SDL_RenderDrawRect(global->renderer, &rect);
 	SDL_RenderPresent(global->renderer);

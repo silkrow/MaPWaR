@@ -33,4 +33,8 @@
 #define BLUE_B 255
 #define BLUE_A 255
 
-
+#define GRID 16
+#define MAP_WIDTH 1200
+#define MAP_HEIGHT 800
+#define ROW MAP_HEIGHT/GRID
+#define COL MAP_WIDTH/GRID

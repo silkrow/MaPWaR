@@ -1,3 +1,5 @@
+#include "con.h"
 #include "types_game.h"
 
-extern Grid land[80][120];
+
+extern Grid land[ROW][COL];
