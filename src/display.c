@@ -205,3 +205,11 @@ void display_birth_place(int x1, int y1, int x2, int y2){
 	SDL_RenderDrawRect(global->renderer, &rect);
 	SDL_RenderPresent(global->renderer);
 }
+
+void display_unit(Player* p){
+	SDL_Surface * s = NULL;
+	s = IMG_Load(IMAGE_PATH);
+	SDL_Texture * t = SDL_CreateTextureFromSurface(global->renderer, s);
+	SDL_RenderCopy(global->renderer, t, NULL, &(land[p->birth_x][p->birth_y].box));
+
+}

@@ -13,3 +13,4 @@ void display_button(Button*);
 void playlayout_basic(void);
 void draw_land(void);
 void display_birth_place(int, int, int, int);
+void display_unit(Player *);
