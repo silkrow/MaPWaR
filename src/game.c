@@ -50,6 +50,15 @@ void set_game(armyType teamType){
 	strcat(p1->image, (p1->armytype == RED)? "red/":"blue/");
 	strcat(p2->image, (p2->armytype == RED)? "red/":"blue/");
 
+	p1->Army = malloc(sizeof(Unit)); // First asign the header with memory location.
+	p2->Army = malloc(sizeof(Unit));
+
+	p1->Army->forward = NULL;
+	p2->Army->forward = NULL;
+	
+	p1->army_num = 0;
+	p2->army_num = 0;
+
 //// Basic display setting up.
 	playlayout_basic();
 
@@ -82,6 +91,8 @@ void run_game(void){
 }
 
 void destroy_game(void){
+	free_units(p1);
+	free_units(p2);
 	free(p1->image);
 	free(p2->image);
 	free(p1);
@@ -210,4 +221,14 @@ void generate_birth_place(Player * p){
 
 	p->birth_x = x;
 	p->birth_y = y;
+}
+
+void free_units(Player * p){
+	Unit * ptr;
+	ptr = p->Army;
+	while (ptr->forward != NULL){
+		ptr = ptr->forward;
+		free(ptr->backward);
+	}
+	free(ptr);
 }
