@@ -21,7 +21,7 @@ void display_prepare(void){
 	SDL_RenderClear(global->renderer);
 	SDL_Surface * background = NULL;
 
-	background = IMG_Load("./resources/images/bg.bmp");
+	background = IMG_Load("./resources/images/basic/bg.bmp");
     if (background == NULL)
     {
         fprintf(stderr, "Unable to load image.\n");
@@ -65,7 +65,7 @@ void display_picking(void){
 	SDL_Surface * background = NULL;
 
 	SDL_SetRenderDrawColor(global->renderer, RED_R, RED_G, RED_B, RED_A);
-	background = IMG_Load("./resources/images/ts.png");
+	background = IMG_Load("./resources/images/basic/ts.png");
 	bt_0.box.x = 360; 
 	bt_0.box.y = 100;
 	bt_0.box.w = 340;
@@ -82,7 +82,7 @@ void display_picking(void){
 	/////
 	
 	SDL_SetRenderDrawColor(global->renderer, BLUE_R, BLUE_G, BLUE_B, BLUE_A);
-	background = IMG_Load("./resources/images/jw.png");
+	background = IMG_Load("./resources/images/basic/jw.png");
 	bt_1.box.x = 900; 
 	bt_1.box.y = 100;
 	bt_1.box.w = 340;
@@ -106,16 +106,12 @@ void playlayout_basic(){ // Temporarily test.
 	SDL_SetRenderDrawColor(global->renderer, BG_R, BG_G, BG_B, BG_A);
 	SDL_RenderClear(global->renderer);
 	
-	SDL_SetRenderDrawColor(global->renderer, 0, 0, 0, 255);
-	SDL_RenderDrawLine(global->renderer,
-        	MAP_WIDTH, 0, MAP_WIDTH, MAP_HEIGHT);
-	
 	// Display the operation area on the right side.
-	SDL_SetRenderDrawColor(global->renderer, 180, 180, 50, 255);
+	SDL_SetRenderDrawColor(global->renderer, 130, 130, 50, 255);
 	SDL_Rect desk = {
-		5 + MAP_WIDTH,
+		MAP_WIDTH,
 		0,
-		WINDOW_WIDTH - 5 - MAP_WIDTH,
+		WINDOW_WIDTH - MAP_WIDTH,
 		MAP_HEIGHT
 		};
 	SDL_RenderFillRect(global->renderer, &desk);

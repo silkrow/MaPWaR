@@ -94,6 +94,13 @@ void set_map(void){
 	generate_birth_place(p1);
 	generate_birth_place(p2);
 
+///
+	SDL_Surface * s = NULL;
+	s = IMG_Load("./resources/images/blue/1.png");
+	SDL_Texture * t = SDL_CreateTextureFromSurface(global->renderer, s);
+	SDL_RenderCopy(global->renderer, t, NULL, &(land[p1->birth_x][p1->birth_y].box));
+	
+///
 	display_birth_place(p1->birth_x, p1->birth_y,
 						p2->birth_x, p2->birth_y);
 
