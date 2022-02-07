@@ -3,6 +3,7 @@
 #include <SDL2/SDL_image.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 
 #include "con.h"
@@ -40,6 +41,15 @@ void set_game(armyType teamType){
 	p1->side = 0;
 	p2->side = 1;
 
+	p1->image = malloc(50 * sizeof(char));
+	p2->image = malloc(50 * sizeof(char));
+
+	strcpy(p1->image, "./resources/images/");
+	strcpy(p2->image, "./resources/images/");
+
+	strcat(p1->image, (p1->armytype == RED)? "red/":"blue/");
+	strcat(p2->image, (p2->armytype == RED)? "red/":"blue/");
+
 //// Basic display setting up.
 	playlayout_basic();
 
@@ -72,6 +82,8 @@ void run_game(void){
 }
 
 void destroy_game(void){
+	free(p1->image);
+	free(p2->image);
 	free(p1);
 	free(p2);
 }
@@ -93,14 +105,15 @@ void set_map(void){
 
 	generate_birth_place(p1);
 	generate_birth_place(p2);
-
 ///
+	
 	SDL_Surface * s = NULL;
-	s = IMG_Load("./resources/images/blue/1.png");
+	s = IMG_Load(IMAGE_PATH);
 	SDL_Texture * t = SDL_CreateTextureFromSurface(global->renderer, s);
 	SDL_RenderCopy(global->renderer, t, NULL, &(land[p1->birth_x][p1->birth_y].box));
 	
 ///
+
 	display_birth_place(p1->birth_x, p1->birth_y,
 						p2->birth_x, p2->birth_y);
 

@@ -70,6 +70,7 @@ typedef struct playerInfo
 	int side; // 0 for right, 1 for left.
 	int birth_x;
 	int birth_y;
+	char * image;
 } Player;
 
 typedef struct {
