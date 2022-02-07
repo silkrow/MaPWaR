@@ -1,6 +1,6 @@
 # MaPWaR
 
-![tempLogo](resources/images/both.png)
+![tempLogo](resources/images/walking.gif)
 
 This is a game based on C & SDL.
 
