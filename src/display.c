@@ -206,10 +206,27 @@ void display_birth_place(int x1, int y1, int x2, int y2){
 	SDL_RenderPresent(global->renderer);
 }
 
-void display_unit(Player* p){
+void display_unit(Player* p, Unit* u){
 	SDL_Surface * s = NULL;
-	s = IMG_Load(IMAGE_PATH);
-	SDL_Texture * t = SDL_CreateTextureFromSurface(global->renderer, s);
-	SDL_RenderCopy(global->renderer, t, NULL, &(land[p->birth_x][p->birth_y].box));
+	char image_path[50];
+	image_path[0] = '\0';
+	strcat(image_path, p->image);
+	strcat(image_path, u->name);
+	if (u->walking){
+		if(p->side == 0)
+			strcat(image_path, "r1.png");
+		else
+			strcat(image_path, "l1.png");
+	}
+	else strcat(image_path, "0.png");
 
+	s = IMG_Load(image_path);
+	SDL_Texture * t = SDL_CreateTextureFromSurface(global->renderer, s);
+	SDL_Rect box = {
+		u->x - GRID/2,
+		u->y - GRID/2,
+		GRID,
+		GRID
+	};
+	SDL_RenderCopy(global->renderer, t, NULL, &(box));
 }

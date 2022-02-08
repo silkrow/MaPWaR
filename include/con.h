@@ -7,7 +7,7 @@
 #define FPS 60
 #define FRAME_TARGET_TIME (1000 / FPS)
 
-#define IMAGE_PATH "./resources/images/red/tank/l1.png"
+#define IMAGE_PATH "./resources/images/"
 
 // The color parameters of background. 
 #define BG_R 120

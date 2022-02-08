@@ -67,16 +67,14 @@ typedef struct unit{
 	struct unit * forward; // Used in the linked list.
 	struct unit * backward;
 
-	int n; // To locate the position of this unit in the linked list.
-
 	int x;
 	int y; // The location of this unit.
 
 	char * name;
 	int walking; // A 0/1 value, indicating whether the unit has a series of pictures for moving animation.
 	int sight; // The range of sight, 0 for none.
-	int n_dam; // The number of types of damage.
-	float damage[2]; // In case of there're multiple kinds of damage.
+	float d1;
+	float d2; // In case of there're multiple kinds of damage.
 	float speed; // The regular moving speed of the unit. 
 } Unit;
 

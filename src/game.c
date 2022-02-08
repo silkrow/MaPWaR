@@ -10,10 +10,9 @@
 #include "extern.h"
 #include "types_game.h"
 #include "game.h"
-#include "map.h"
-#include "troop.h"
 #include "display.h"
 #include "main.h"
+#include "units.h"
 
 ///////////
 //variables
@@ -55,6 +54,9 @@ void set_game(armyType teamType){
 
 	p1->Army->forward = NULL;
 	p2->Army->forward = NULL;
+
+	p1->Army->name = NULL;
+	p2->Army->name = NULL;
 	
 	p1->army_num = 0;
 	p2->army_num = 0;
@@ -116,9 +118,14 @@ void set_map(void){
 
 	generate_birth_place(p1);
 	generate_birth_place(p2);
+/////
+	new_unit(p1, 160, 170, "tank/", TRUE, 0, 3, 4, 4);
 
-	display_unit(p2);
+	new_unit(p1, 60, 500, "infantry/", TRUE, 0, 3, 4, 4);
+	display_unit(p1, p1->Army->forward);
 
+	display_unit(p1, p1->Army->forward->forward);
+/////
 	display_birth_place(p1->birth_x, p1->birth_y,
 						p2->birth_x, p2->birth_y);
 
@@ -228,7 +235,9 @@ void free_units(Player * p){
 	ptr = p->Army;
 	while (ptr->forward != NULL){
 		ptr = ptr->forward;
+		if (ptr->backward->name != NULL) free(ptr->backward->name);
 		free(ptr->backward);
 	}
+	if (ptr->name != NULL) free(ptr->name);
 	free(ptr);
 }
