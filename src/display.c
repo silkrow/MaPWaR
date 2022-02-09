@@ -47,7 +47,7 @@ void display_prepare(void){
 	bt_0.box = txtBox;
 	SDL_SetRenderDrawColor(global->renderer, 0, 150, 0, 205);
 
-	display_button(&(bt_0));
+	draw_button(&(bt_0));
 
 	
 	SDL_RenderPresent(global->renderer);
@@ -116,6 +116,23 @@ void playlayout_basic(){ // Temporarily test.
 		};
 	SDL_RenderFillRect(global->renderer, &desk);
 
+	SDL_Color color = {240, 240, 240};
+	SDL_Surface * surface = TTF_RenderText_Solid(font, "Next Round", color);
+	bt_0.figure = SDL_CreateTextureFromSurface(global->renderer, surface);
+	int txt_w = 0;
+	int txt_h = 0;
+	SDL_QueryTexture(bt_0.figure, NULL, NULL, &txt_w, &txt_h);
+	SDL_Rect txtBox = { 
+		WINDOW_WIDTH/2 + MAP_WIDTH/2 - txt_w/2,
+		WINDOW_HEIGHT - txt_h - 60,
+		txt_w,
+		txt_h
+	};
+	bt_0.box = txtBox;
+	SDL_SetRenderDrawColor(global->renderer, 0, 150, 0, 205);
+
+	draw_button(&(bt_0));
+
 }
 
 
@@ -153,7 +170,7 @@ int display_loadFiles(void) {
     return TRUE;
 }
 
-void display_button(Button* bt){
+void draw_button(Button* bt){
 
 	SDL_Rect theBox = {
 		bt->box.x - 15,
@@ -189,7 +206,7 @@ void draw_land(void) {
 		}
 }
 
-void display_birth_place(int x1, int y1, int x2, int y2){
+void draw_birth_place(int x1, int y1, int x2, int y2){
 	SDL_SetRenderDrawColor(global->renderer, 0, 0, 0, 255);
 	SDL_Rect rect = {
 		y1 * GRID,
@@ -203,10 +220,9 @@ void display_birth_place(int x1, int y1, int x2, int y2){
 	rect.y = x2*GRID;
 
 	SDL_RenderDrawRect(global->renderer, &rect);
-	SDL_RenderPresent(global->renderer);
 }
 
-void display_unit(Player* p, Unit* u){
+void draw_unit(Player* p, Unit* u){
 	SDL_Surface * s = NULL;
 	char image_path[50];
 	image_path[0] = '\0';
@@ -222,11 +238,5 @@ void display_unit(Player* p, Unit* u){
 
 	s = IMG_Load(image_path);
 	SDL_Texture * t = SDL_CreateTextureFromSurface(global->renderer, s);
-	SDL_Rect box = {
-		u->x - GRID/2,
-		u->y - GRID/2,
-		GRID,
-		GRID
-	};
-	SDL_RenderCopy(global->renderer, t, NULL, &(box));
+	SDL_RenderCopy(global->renderer, t, NULL, &(u->box));
 }

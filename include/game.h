@@ -12,3 +12,5 @@ void random_mountain(int);
 void h_down(int, int);
 void generate_birth_place(Player *);
 void free_units(Player *);
+int is_clicked(SDL_Rect*, float, float);
+void round_update(void);

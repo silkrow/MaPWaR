@@ -61,6 +61,11 @@ void set_game(armyType teamType){
 	p1->army_num = 0;
 	p2->army_num = 0;
 
+	p1->next_round = FALSE;
+	p1->round = 0;
+	p2->next_round = FALSE;
+	p2->round = 0;
+
 //// Basic display setting up.
 	playlayout_basic();
 
@@ -69,15 +74,17 @@ void set_game(armyType teamType){
 }
 
 void run_game(void){
+	SDL_RenderPresent(global->renderer); // Display the calculated situation after last round.
+
 	SDL_Event event;
-	SDL_PollEvent(&event);
+	SDL_WaitEvent(&event);
 
 	switch(event.type){
 		case SDL_QUIT:
 			global->running = FALSE;
 			destroy_game();
 			return;
-		case SDL_KEYDOWN:
+		case SDL_KEYUP:
 			if (event.key.keysym.sym == SDLK_ESCAPE){ // Ask for confirm.
 				global->state = GAME_PREPARE;
 				destroy_game();
@@ -86,10 +93,52 @@ void run_game(void){
 				return;
 			}
 			break;
+		case SDL_MOUSEBUTTONUP:
+			if (event.button.button == SDL_BUTTON_LEFT)
+			{
+				if (is_clicked(&(bt_0.box), event.button.x, event.button.y)){
+					if (!p1->next_round){
+						p1->next_round = TRUE;
+						playlayout_basic();
+						draw_land();
+						draw_birth_place(p1->birth_x, p1->birth_y,
+							p2->birth_x, p2->birth_y);
+						draw_unit(p1, p1->Army->forward);
+						draw_unit(p2, p2->Army->forward);
+						return;
+					}
+					else {
+						p1->next_round = FALSE;
+						p1->round++;
+						p2->round++;
+						draw_land();
+						draw_birth_place(p1->birth_x, p1->birth_y,
+							p2->birth_x, p2->birth_y);
+						draw_unit(p1, p1->Army->forward);
+						draw_unit(p2, p2->Army->forward);
+
+						round_update();
+						return;
+					}
+				}
+			}
+			break;
 		default:
 			break;
 	}
 	SDL_Delay((int)global->spf);
+}
+
+void round_update(){
+	printf("Hey, updating!\n");	
+}
+
+int is_clicked(SDL_Rect* rect, float x, float y){
+	if(rect->x <= x &&
+		rect->y <= y &&
+		rect->w + rect->x >= x &&
+		rect->h + rect->y >= y) return TRUE;
+	return FALSE;
 }
 
 void destroy_game(void){
@@ -118,17 +167,14 @@ void set_map(void){
 
 	generate_birth_place(p1);
 	generate_birth_place(p2);
-/////
-	new_unit(p1, 160, 170, "tank/", TRUE, 0, 3, 4, 4);
 
-	new_unit(p1, 60, 500, "infantry/", TRUE, 0, 3, 4, 4);
-	display_unit(p1, p1->Army->forward);
+	new_unit(p1, MAP_WIDTH - 10 * GRID, rand()%(MAP_HEIGHT - GRID) + GRID/2, "base/", FALSE, 5, 3, 4, 4);
+	new_unit(p2, 10*GRID, rand()%(MAP_HEIGHT - GRID) + GRID/2, "base/", FALSE, 5, 3, 4, 4);
+	draw_unit(p1, p1->Army->forward);
+	draw_unit(p2, p2->Army->forward);
 
-	display_unit(p1, p1->Army->forward->forward);
-/////
-	display_birth_place(p1->birth_x, p1->birth_y,
+	draw_birth_place(p1->birth_x, p1->birth_y,
 						p2->birth_x, p2->birth_y);
-
 }
 
 void random_mountain(int n) { // Generate n mountains randomly.

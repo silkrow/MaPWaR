@@ -13,6 +13,17 @@ int new_unit(Player * p, int x, int y, char* s, int walking, int sight,
 
 	u->x = x;
 	u->y = y;
+
+	u->grid.x = x - x%GRID;
+	u->grid.y = y - y%GRID;
+	u->grid.w = GRID;
+	u->grid.h = GRID;
+
+	u->box.x = x - GRID/2;
+	u->box.y = y - GRID/2;
+	u->box.w = GRID;
+	u->box.h = GRID;
+
 	u->backward = p->Army;
 	u->name = malloc(50*sizeof(char));
 	strcpy(u->name, s);

@@ -52,19 +52,13 @@ void setup_picking(void){
 
 void process_prepare(void){
 	SDL_Event event;
-	SDL_PollEvent(&event);
+	SDL_WaitEvent(&event);
 
 	switch(event.type){
 		case SDL_QUIT:
 			global->running = FALSE;
 			return;
-		//case SDL_KEYDOWN:
-		//	if (event.key.keysym.sym == SDLK_ESCAPE){
-		//		global->running = FALSE;
-		//		return;
-		//	}
-		//	break;
-		case SDL_MOUSEBUTTONDOWN:
+		case SDL_MOUSEBUTTONUP:
 			if(event.button.button == SDL_BUTTON_LEFT &&
 				clicked(&bt_0, event.button.x, event.button.y))
 			{
@@ -81,13 +75,13 @@ void process_prepare(void){
 
 void process_picking(void){
 	SDL_Event event;
-	SDL_PollEvent(&event);
+	SDL_WaitEvent(&event);
 
 	switch(event.type){
 		case SDL_QUIT:
 			global->running = FALSE;
 			return;
-		case SDL_KEYDOWN:
+		case SDL_KEYUP:
 			if (event.key.keysym.sym == SDLK_ESCAPE){
 				global->state = GAME_PREPARE;
 				
@@ -95,7 +89,7 @@ void process_picking(void){
 				return;
 			}
 			break;
-		case SDL_MOUSEBUTTONDOWN:
+		case SDL_MOUSEBUTTONUP:
 			if(event.button.button == SDL_BUTTON_LEFT &&
 				clicked(&bt_0, event.button.x, event.button.y))
 			{

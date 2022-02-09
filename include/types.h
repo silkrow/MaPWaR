@@ -67,6 +67,9 @@ typedef struct unit{
 	struct unit * forward; // Used in the linked list.
 	struct unit * backward;
 
+	SDL_Rect box;
+	SDL_Rect grid;
+
 	int x;
 	int y; // The location of this unit.
 
@@ -88,6 +91,9 @@ typedef struct playerInfo
 	char * image;
 	int army_num;
 	Unit * Army; // A double-linked list to hold the units for player.
+
+	int next_round;
+	int round;
 } Player;
 
 typedef struct {
