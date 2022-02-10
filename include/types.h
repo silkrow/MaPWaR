@@ -73,6 +73,7 @@ typedef struct unit{
 	int x;
 	int y; // The location of this unit.
 
+	playerType playertype;
 	char * name;
 	int walking; // A 0/1 value, indicating whether the unit has a series of pictures for moving animation.
 	int sight; // The range of sight, 0 for none.

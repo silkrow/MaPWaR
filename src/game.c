@@ -19,6 +19,7 @@
 ///////////
 Player * p1; // By default, human player uses p1.
 Player * p2;
+Unit * just_pick = NULL; // The unit that has just been picked.
 
 Grid land[ROW][COL];
 ///////////
@@ -96,30 +97,79 @@ void run_game(void){
 		case SDL_MOUSEBUTTONUP:
 			if (event.button.button == SDL_BUTTON_LEFT)
 			{
-				if (is_clicked(&(bt_0.box), event.button.x, event.button.y)){
+				if (is_clicked(&(bt_0.box), event.button.x, event.button.y)){// Next round.
 					if (!p1->next_round){
 						p1->next_round = TRUE;
+						//////basic layouts for each round//////
 						playlayout_basic();
 						draw_land();
 						draw_birth_place(p1->birth_x, p1->birth_y,
 							p2->birth_x, p2->birth_y);
-						draw_unit(p1, p1->Army->forward);
-						draw_unit(p2, p2->Army->forward);
+						draw_units();
+						////////////
 						return;
 					}
 					else {
 						p1->next_round = FALSE;
 						p1->round++;
 						p2->round++;
+						//////basic layouts for each round//////
+						playlayout_basic();
+						playlayout_basic();
 						draw_land();
 						draw_birth_place(p1->birth_x, p1->birth_y,
 							p2->birth_x, p2->birth_y);
-						draw_unit(p1, p1->Army->forward);
-						draw_unit(p2, p2->Army->forward);
-
+						draw_units();
+						////////////
 						round_update();
 						return;
 					}
+				}
+				if (p1->next_round == FALSE){ // p1's round.
+					//////basic layouts for each round//////
+					playlayout_basic();
+					draw_land();
+					draw_birth_place(p1->birth_x, p1->birth_y,
+						p2->birth_x, p2->birth_y);
+					draw_units();
+					////////////
+					
+					Unit * ptr = p1->Army;
+					while (ptr->forward != NULL)
+					{
+						ptr = ptr->forward;
+						if (is_clicked(&(ptr->box), event.button.x, event.button.y))
+						{
+							just_pick = ptr; // Update the unit just picked.
+							draw_unit_desk(just_pick, p1); // Display the basic information.
+							return;
+						}
+					}
+					if (just_pick != NULL && just_pick->playertype == p1->playertype)
+						draw_unit_desk(just_pick, p1);
+				}
+				else{ // p2's round.
+					//////basic layouts for each round//////
+					playlayout_basic();
+					draw_land();
+					draw_birth_place(p1->birth_x, p1->birth_y,
+						p2->birth_x, p2->birth_y);
+					draw_units();
+					////////////
+					
+					Unit * ptr = p2->Army;
+					while (ptr->forward != NULL)
+					{
+						ptr = ptr->forward;
+						if (is_clicked(&(ptr->box), event.button.x, event.button.y))
+						{
+							just_pick = ptr; // Update the unit just picked.
+							draw_unit_desk(just_pick, p2); // Display the basic information.
+							return;
+						}
+					}
+					if (just_pick != NULL && just_pick->playertype == p2->playertype)
+						draw_unit_desk(just_pick, p2);
 				}
 			}
 			break;
@@ -170,11 +220,10 @@ void set_map(void){
 
 	new_unit(p1, MAP_WIDTH - 10 * GRID, rand()%(MAP_HEIGHT - GRID) + GRID/2, "base/", FALSE, 5, 3, 4, 4);
 	new_unit(p2, 10*GRID, rand()%(MAP_HEIGHT - GRID) + GRID/2, "base/", FALSE, 5, 3, 4, 4);
-	draw_unit(p1, p1->Army->forward);
-	draw_unit(p2, p2->Army->forward);
 
 	draw_birth_place(p1->birth_x, p1->birth_y,
 						p2->birth_x, p2->birth_y);
+	draw_units();
 }
 
 void random_mountain(int n) { // Generate n mountains randomly.

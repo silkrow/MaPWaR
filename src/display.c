@@ -7,6 +7,9 @@
 #include "extern.h"
 #include "display.h"
 #include "con.h"
+
+extern Player* p1;
+extern Player* p2;
 /////////////////////////////////////////////////////////////////////
 /////variables
 TTF_Font * font = NULL;
@@ -116,6 +119,21 @@ void playlayout_basic(){ // Temporarily test.
 		};
 	SDL_RenderFillRect(global->renderer, &desk);
 
+	// Display the window for the unit picture.
+	SDL_Surface * s = NULL;
+	s = IMG_Load("./resources/images/basic/unit_pic.png");
+	SDL_Texture * t = SDL_CreateTextureFromSurface(global->renderer, s);
+	SDL_Rect box = {
+		DESK_UNIT_X,
+		DESK_UNIT_Y,
+		DESK_UNIT_LENGTH,
+		DESK_UNIT_LENGTH
+	}; 
+
+	SDL_RenderCopy(global->renderer, t, NULL, &box);
+
+
+	// Display the 'next round' button.
 	SDL_Color color = {240, 240, 240};
 	SDL_Surface * surface = TTF_RenderText_Solid(font, "Next Round", color);
 	bt_0.figure = SDL_CreateTextureFromSurface(global->renderer, surface);
@@ -130,9 +148,10 @@ void playlayout_basic(){ // Temporarily test.
 	};
 	bt_0.box = txtBox;
 	SDL_SetRenderDrawColor(global->renderer, 0, 150, 0, 205);
-
 	draw_button(&(bt_0));
 
+	SDL_FreeSurface(s);
+	SDL_FreeSurface(surface);
 }
 
 
@@ -239,4 +258,50 @@ void draw_unit(Player* p, Unit* u){
 	s = IMG_Load(image_path);
 	SDL_Texture * t = SDL_CreateTextureFromSurface(global->renderer, s);
 	SDL_RenderCopy(global->renderer, t, NULL, &(u->box));
+
+	SDL_FreeSurface(s);
+}
+
+void draw_units(void){
+	Unit* ptr;
+	ptr = p1->Army;
+	while(ptr->forward != NULL){
+		draw_unit(p1, ptr->forward);
+		ptr = ptr->forward;
+	}
+
+	ptr = p2->Army;
+	while(ptr->forward != NULL){
+		draw_unit(p2, ptr->forward);
+		ptr = ptr->forward;
+	}
+
+}
+
+void draw_unit_desk(Unit* u, Player* p){
+	SDL_Surface * s = NULL;
+	char image_path[50];
+	image_path[0] = '\0';
+	strcat(image_path, p->image);
+	strcat(image_path, u->name);
+	if (u->walking){
+		if(p->side == 0)
+			strcat(image_path, "r1.png");
+		else
+			strcat(image_path, "l1.png");
+	}
+	else strcat(image_path, "0.png");
+
+	s = IMG_Load(image_path);
+	SDL_Texture * t = SDL_CreateTextureFromSurface(global->renderer, s);
+
+	SDL_Rect box = {
+		DESK_UNIT_X + 20,
+		DESK_UNIT_Y + 20,
+		265,
+		265
+	};
+	SDL_RenderCopy(global->renderer, t, NULL, &box);
+
+	SDL_FreeSurface(s);
 }
