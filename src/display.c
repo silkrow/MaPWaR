@@ -31,8 +31,7 @@ void display_prepare(void){
        	return;
     }
 	
-   	SDL_BlitSurface(background, NULL, global->screenSur, NULL);
-	SDL_Texture * texture = SDL_CreateTextureFromSurface(global->renderer, global->screenSur);
+	SDL_Texture * texture = SDL_CreateTextureFromSurface(global->renderer, background);
 	SDL_RenderCopy(global->renderer, texture, NULL, NULL);
 
 	SDL_Color color = {140, 140, 140};
@@ -262,6 +261,17 @@ void draw_unit(Player* p, Unit* u){
 	SDL_FreeSurface(s);
 }
 
+void draw_unit_route(Unit* u){
+	/* If there's a destination, draw the point and the route. */
+	if (u->to_x != -1)
+	{
+		SDL_SetRenderDrawColor(global->renderer, 0, 0, 0, 255);
+		SDL_RenderDrawPoint(global->renderer, u->to_x, u->to_y);
+		SDL_RenderDrawLine(global->renderer, u->to_x, u->to_y, u->x, u->y);
+	}
+
+}
+
 void draw_units(void){
 	Unit* ptr;
 	ptr = p1->Army;
@@ -276,6 +286,25 @@ void draw_units(void){
 		ptr = ptr->forward;
 	}
 
+	/* Now draw the cover(for sight)*/
+
+	/* Now draw the routes. */
+
+	if (p1->next_round == FALSE){ // p1's round.
+		ptr = p1->Army;
+		while(ptr->forward != NULL){
+			draw_unit_route(ptr->forward);
+			ptr = ptr->forward;
+		}
+	}
+	else{ // p2's round.
+		ptr = p2->Army;
+		while(ptr->forward != NULL){
+			draw_unit_route(ptr->forward);
+			ptr = ptr->forward;
+		}
+
+	}
 }
 
 void draw_unit_desk(Unit* u, Player* p){

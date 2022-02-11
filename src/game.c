@@ -95,7 +95,7 @@ void run_game(void){
 			}
 			break;
 		case SDL_MOUSEBUTTONUP:
-			if (event.button.button == SDL_BUTTON_LEFT)
+			if 	(event.button.button == SDL_BUTTON_LEFT)
 			{
 				if (is_clicked(&(bt_0.box), event.button.x, event.button.y)){// Next round.
 					if (!p1->next_round){
@@ -145,7 +145,7 @@ void run_game(void){
 							return;
 						}
 					}
-					if (just_pick != NULL && just_pick->playertype == p1->playertype)
+					if (just_pick != NULL && just_pick->armytype == p1->armytype)
 						draw_unit_desk(just_pick, p1);
 				}
 				else{ // p2's round.
@@ -168,9 +168,47 @@ void run_game(void){
 							return;
 						}
 					}
-					if (just_pick != NULL && just_pick->playertype == p2->playertype)
+					if (just_pick != NULL && just_pick->armytype == p2->armytype)
 						draw_unit_desk(just_pick, p2);
 				}
+			}
+			else if	(event.button.button == SDL_BUTTON_RIGHT &&
+					event.button.x > 0 && event.button.y > 0 &&
+					event.button.x < MAP_WIDTH && event.button.y < MAP_HEIGHT){
+				if (p1->next_round == FALSE){ // p1's round.
+					if (just_pick != NULL && just_pick->armytype == p1->armytype)
+					{
+						just_pick->to_x = event.button.x;
+						just_pick->to_y = event.button.y;
+						//////basic layouts for each round//////
+						playlayout_basic();
+						draw_land();
+						draw_birth_place(p1->birth_x, p1->birth_y,
+							p2->birth_x, p2->birth_y);
+						draw_units();
+
+						draw_unit_desk(just_pick, p1); // Display the basic information.
+						////////////
+					}
+				}
+				else{ // p2's round.
+					if (just_pick != NULL && just_pick->armytype == p2->armytype)
+					{
+						just_pick->to_x = event.button.x;
+						just_pick->to_y = event.button.y;
+						//////basic layouts for each round//////
+						playlayout_basic();
+						draw_land();
+						draw_birth_place(p1->birth_x, p1->birth_y,
+							p2->birth_x, p2->birth_y);
+						draw_units();
+
+						draw_unit_desk(just_pick, p2); // Display the basic information.
+						////////////
+					}
+
+				}
+				
 			}
 			break;
 		default:
@@ -220,7 +258,9 @@ void set_map(void){
 
 	new_unit(p1, MAP_WIDTH - 10 * GRID, rand()%(MAP_HEIGHT - GRID) + GRID/2, "base/", FALSE, 5, 3, 4, 4);
 	new_unit(p2, 10*GRID, rand()%(MAP_HEIGHT - GRID) + GRID/2, "base/", FALSE, 5, 3, 4, 4);
-
+///////////////////////////////////////////////
+	new_unit(p1, MAP_WIDTH - 150, 400, "scout/", TRUE, 5, 3, 4, 4);
+///////////////////////////////////////////////
 	draw_birth_place(p1->birth_x, p1->birth_y,
 						p2->birth_x, p2->birth_y);
 	draw_units();
