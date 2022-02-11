@@ -303,7 +303,6 @@ void draw_units(void){
 			draw_unit_route(ptr->forward);
 			ptr = ptr->forward;
 		}
-
 	}
 }
 

@@ -63,6 +63,11 @@ typedef struct globalSDL
 	int last_frame_time;
 } GlobalSDL;
 
+typedef struct velocity{
+	double vx;
+	double vy;
+} Velocity;
+
 typedef struct unit{
 	struct unit * forward; // Used in the linked list.
 	struct unit * backward;
@@ -70,11 +75,15 @@ typedef struct unit{
 	SDL_Rect box;
 	SDL_Rect grid;
 
+	int last_h; // Record the height of last frame.
+
 	int x;
 	int y; // The location of this unit.
 
 	int to_x; // -1 representing no movement.
 	int to_y;
+
+	Velocity v;
 
 	armyType armytype;
 	char * name;

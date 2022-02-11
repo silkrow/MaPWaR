@@ -4,6 +4,7 @@
 
 #include "con.h"
 #include "extern.h"
+#include "extern_game.h"
 #include "units.h"
 
 int new_unit(Player * p, int x, int y, char* s, int walking, int sight,
@@ -25,6 +26,8 @@ int new_unit(Player * p, int x, int y, char* s, int walking, int sight,
 	u->box.y = y - GRID/2;
 	u->box.w = GRID;
 	u->box.h = GRID;
+
+	u->last_h = land[u->grid.y/GRID][u->grid.x/GRID].h;
 
 	u->armytype = p->armytype;
 	u->backward = p->Army;

@@ -14,3 +14,4 @@ void generate_birth_place(Player *);
 void free_units(Player *);
 int is_clicked(SDL_Rect*, float, float);
 void round_update(void);
+void get_velocity(Unit *);

@@ -9,6 +9,8 @@
 
 #define IMAGE_PATH "./resources/images/"
 
+#define STEP_PER_ROUND 20
+
 // The color parameters of background. 
 #define BG_R 120
 #define BG_G 150

@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <math.h>
 
 #include "con.h"
 #include "extern.h"
@@ -114,12 +115,11 @@ void run_game(void){
 						p1->round++;
 						p2->round++;
 						//////basic layouts for each round//////
-						playlayout_basic();
-						playlayout_basic();
-						draw_land();
-						draw_birth_place(p1->birth_x, p1->birth_y,
-							p2->birth_x, p2->birth_y);
-						draw_units();
+					//	playlayout_basic();
+					//	draw_land();
+					//	draw_birth_place(p1->birth_x, p1->birth_y,
+					//		p2->birth_x, p2->birth_y);
+					//	draw_units();
 						////////////
 						round_update();
 						return;
@@ -219,6 +219,88 @@ void run_game(void){
 
 void round_update(){
 	printf("Hey, updating!\n");	
+
+	Unit* ptr; 
+	int time = STEP_PER_ROUND; // Record the total amount of time step in this round.
+	
+	while(time){
+
+		/* First check if there're any battles. */
+		/// Check each unit's attacking area. After fighting, remember to set the to_x to -1.
+		/* Then check if there're any collisions. */
+
+		/* Then keep the units with destinations walking. */
+		ptr = p1->Army;
+
+		while (ptr->forward != NULL){
+			ptr = ptr->forward;
+			if (ptr->to_x != -1 && 
+					(ptr->to_x != ptr->x || ptr->to_y != ptr->y))
+			{
+				get_velocity(ptr);
+				ptr->x = (int)(round(ptr->x + ptr->v.vx));
+				ptr->y = (int)(round(ptr->y + ptr->v.vy));
+
+				ptr->box.x = ptr->x - GRID/2;
+				ptr->box.y = ptr->y - GRID/2;
+
+				ptr->grid.x = ptr->x - ptr->x%GRID;
+				ptr->grid.y = ptr->y - ptr->y%GRID;
+
+
+			}
+		}
+				
+		ptr = p2->Army;
+
+		while (ptr->forward != NULL){
+			ptr = ptr->forward;
+			if (ptr->to_x != -1 && 
+					(ptr->to_x != ptr->x || ptr->to_y != ptr->y))
+			{
+				get_velocity(ptr);
+				ptr->x = (int)(round(ptr->x + ptr->v.vx));
+				ptr->y = (int)(round(ptr->y + ptr->v.vy));
+
+				ptr->box.x = ptr->x - GRID/2;
+				ptr->box.y = ptr->y - GRID/2;
+
+				ptr->grid.x = ptr->x - ptr->x%GRID;
+				ptr->grid.y = ptr->y - ptr->y%GRID;
+
+
+			}
+		}
+
+
+
+		//////basic layouts for each round//////
+				
+		playlayout_basic();
+		draw_land();
+		draw_birth_place(p1->birth_x, p1->birth_y,
+						p2->birth_x, p2->birth_y);
+		draw_units();
+		////////////
+
+		SDL_RenderPresent(global->renderer);
+		time--;
+		SDL_Delay(100);
+	}
+
+
+
+
+}
+
+void get_velocity(Unit * ptr){
+	double sum = sqrt((double)((ptr->to_x - ptr->x)*(ptr->to_x - ptr->x) + 
+					(ptr->to_y - ptr->y)*(ptr->to_y - ptr->y)));
+	(ptr->v).vx = (double)(ptr->to_x - ptr->x)/sum;
+	(ptr->v).vy = (double)(ptr->to_y - ptr->y)/sum;
+
+	(ptr->v).vx *= ptr->speed;
+	(ptr->v).vy *= ptr->speed;
 }
 
 int is_clicked(SDL_Rect* rect, float x, float y){
