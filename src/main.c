@@ -122,7 +122,7 @@ int setup(void){
 	}	
 
 	global->fps = FPS;
-	global->spf = FRAME_TARGET_TIME;
+	global->spf = FRAME_TARGET_TIME / 2; // *%^&%^$^%&^^%$&%^&%^!!!!
 	global->window_width = WINDOW_WIDTH;
 	global->window_height = WINDOW_HEIGHT;
 	global->window = NULL;
