@@ -87,7 +87,10 @@ typedef struct unit{
 
 	armyType armytype;
 	char * name;
-	int walking; // A 0/1 value, indicating whether the unit has a series of pictures for moving animation.
+	int walkable;  // A 0/1 value, indicating whether the unit has a series of pictures for moving animation.
+	int walking; // Indicating whether the unit is walking.
+	int n_png; // The number of image that shall be displayed.
+
 	int sight; // The range of sight, 0 for none.
 	float d1;
 	float d2; // In case of there're multiple kinds of damage.

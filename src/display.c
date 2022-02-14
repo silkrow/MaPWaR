@@ -246,13 +246,41 @@ void draw_unit(Player* p, Unit* u){
 	image_path[0] = '\0';
 	strcat(image_path, p->image);
 	strcat(image_path, u->name);
-	if (u->walking){
-		if(p->side == 0)
-			strcat(image_path, "r1.png");
-		else
-			strcat(image_path, "l1.png");
+
+	if (p->side == 0)
+		strcat(image_path, "r");
+	else 
+		strcat(image_path, "l");
+
+	if (u->walkable)
+	{
+		if (u->walking)
+		{
+			switch (u->n_png){
+				case 1:	
+					strcat(image_path, "1");
+					break;
+				case 2:	
+					strcat(image_path, "2");
+					break;
+				case 3:	
+					strcat(image_path, "3");
+					break;
+				case 4:	
+					strcat(image_path, "4");
+					break;
+				default:
+					break;
+			}
+			u->n_png = (u->n_png + 1) % 4 + 1;
+		}
+		else strcat(image_path, "1");
 	}
-	else strcat(image_path, "0.png");
+	else {
+		strcat(image_path, "0");	
+	}
+
+	strcat(image_path, ".png");
 
 	s = IMG_Load(image_path);
 	SDL_Texture * t = SDL_CreateTextureFromSurface(global->renderer, s);
@@ -312,13 +340,18 @@ void draw_unit_desk(Unit* u, Player* p){
 	image_path[0] = '\0';
 	strcat(image_path, p->image);
 	strcat(image_path, u->name);
-	if (u->walking){
-		if(p->side == 0)
-			strcat(image_path, "r1.png");
-		else
-			strcat(image_path, "l1.png");
+
+	if (p->side == 0)
+		strcat(image_path, "r");
+	else
+		strcat(image_path, "l");
+
+	if (u->walkable){
+		strcat(image_path, "1");
 	}
-	else strcat(image_path, "0.png");
+	else strcat(image_path, "0");
+
+	strcat(image_path, ".png");
 
 	s = IMG_Load(image_path);
 	SDL_Texture * t = SDL_CreateTextureFromSurface(global->renderer, s);

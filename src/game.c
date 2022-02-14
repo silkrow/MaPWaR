@@ -237,6 +237,7 @@ void round_update(){
 			if (ptr->to_x != -1 && 
 					(ptr->to_x != ptr->x || ptr->to_y != ptr->y))
 			{
+				ptr->walking = TRUE;
 				get_velocity(ptr);
 				ptr->x = (int)(round(ptr->x + ptr->v.vx));
 				ptr->y = (int)(round(ptr->y + ptr->v.vy));
@@ -258,6 +259,7 @@ void round_update(){
 			if (ptr->to_x != -1 && 
 					(ptr->to_x != ptr->x || ptr->to_y != ptr->y))
 			{
+				ptr->walking = TRUE;
 				get_velocity(ptr);
 				ptr->x = (int)(round(ptr->x + ptr->v.vx));
 				ptr->y = (int)(round(ptr->y + ptr->v.vy));
@@ -287,10 +289,16 @@ void round_update(){
 		time--;
 		SDL_Delay(100);
 	}
-
-
-
-
+	ptr = p1->Army;
+	while (ptr->forward != NULL){
+		ptr = ptr->forward;
+		ptr->walking = FALSE;
+	}
+	ptr = p2->Army;
+	while (ptr->forward != NULL){
+		ptr = ptr->forward;
+		ptr->walking = FALSE;
+	}
 }
 
 void get_velocity(Unit * ptr){

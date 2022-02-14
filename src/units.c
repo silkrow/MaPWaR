@@ -7,7 +7,7 @@
 #include "extern_game.h"
 #include "units.h"
 
-int new_unit(Player * p, int x, int y, char* s, int walking, int sight,
+int new_unit(Player * p, int x, int y, char* s, int walkable, int sight,
 		float d1, float d2, float speed){
 	
 	Unit * u = malloc(sizeof(Unit));
@@ -33,7 +33,9 @@ int new_unit(Player * p, int x, int y, char* s, int walking, int sight,
 	u->backward = p->Army;
 	u->name = malloc(50*sizeof(char));
 	strcpy(u->name, s);
-	u->walking = walking;
+	u->walkable = walkable;
+	u->walking = FALSE;
+	u->n_png = 1;
 	u->sight = sight;
 	u->d1 = d1;
 	u->d2 = d2;
