@@ -239,9 +239,15 @@ void round_update(){
 			{
 				ptr->walking = TRUE;
 				get_velocity(ptr);
-				ptr->x = (int)(round(ptr->x + ptr->v.vx));
-				ptr->y = (int)(round(ptr->y + ptr->v.vy));
-
+				
+				if (abs(ptr->v.vx) >= abs(ptr->to_x - ptr->x)){
+					ptr->x = ptr->to_x;
+					ptr->y = ptr->to_y;
+				}
+				else{
+					ptr->x = (int)(round(ptr->x + ptr->v.vx));
+					ptr->y = (int)(round(ptr->y + ptr->v.vy));
+				}
 				ptr->box.x = ptr->x - GRID/2;
 				ptr->box.y = ptr->y - GRID/2;
 
@@ -261,8 +267,15 @@ void round_update(){
 			{
 				ptr->walking = TRUE;
 				get_velocity(ptr);
-				ptr->x = (int)(round(ptr->x + ptr->v.vx));
-				ptr->y = (int)(round(ptr->y + ptr->v.vy));
+
+				if (abs(ptr->v.vx) >= abs(ptr->to_x - ptr->x)){
+					ptr->x = ptr->to_x;
+					ptr->y = ptr->to_y;
+				}
+				else{
+					ptr->x = (int)(round(ptr->x + ptr->v.vx));
+					ptr->y = (int)(round(ptr->y + ptr->v.vy));
+				}
 
 				ptr->box.x = ptr->x - GRID/2;
 				ptr->box.y = ptr->y - GRID/2;
